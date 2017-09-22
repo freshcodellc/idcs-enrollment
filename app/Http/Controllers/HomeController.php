@@ -28,7 +28,7 @@ class HomeController extends Controller
         $credit_urls = CreditUrl::where('user_id', Auth::user()->id)->get();
 
         if (count($credit_urls) == 0) {
-            //$this->enroll();
+            $this->enroll();
         }
 
         return view('home', [
@@ -59,12 +59,13 @@ class HomeController extends Controller
                 echo "<h3>EXCEPTION:</h3>";
                 echo $e->getMessage(). " on " . $e->getFile(). ":".$e->getLine();
 
-                echo "<h3>REQUEST:</h3>><pre>";
+                echo "<h3>REQUEST:</h3><pre>";
                 echo $client->__getLastRequestHeaders();
                 echo htmlentities($client->__getLastRequest());
                 echo "</pre>";
+            } else {
+                throw $e;
             }
-            throw $e;
         }
     }
 
@@ -81,32 +82,32 @@ class HomeController extends Controller
             "Product" => [
                 "PackageId" => env('IDCS_PACKAGE'),
                 "ProductUser" => [
-                    "Memberid" => "",
-                    "EmailAddress" => "test@test.com",
-                    "Password" => "123Password",
+                    "Memberid" => Auth::user()->uuid,
+                    "EmailAddress" => Auth::user()->email,
+                    "Password" => "123Password321",
                     "Address" => [
-                        "Address1" => "222 N Alison Rd",
+                        "Address1" => Auth::user()->address,
                         "Address2" => "",
-                        "City" => "Arlington",
-                        "State" => "VA",
-                        "ZipCode" => "22209",
+                        "City" => Auth::user()->city,
+                        "State" => Auth::user()->state,
+                        "ZipCode" => Auth::user()->zip,
                     ],
                     "Phone" => [
-                        "PhoneNumber" => "5555555555",
+                        "PhoneNumber" => Auth::user()->phone,
                         "PhoneType" => "Home"
                     ],
                     "Person" => [
-                        "FirstName" => "Test",
-                        "LastName" => "Testboy",
+                        "FirstName" => Auth::user()->first_name,
+                        "LastName" => Auth::user()->last_name,
                         "MiddleName" => ""
                     ]
                 ]
             ],
             "Partner" => [
                 "partnerAccount" => env('IDCS_USERNAME'),
-                "partnerCode" => "",
+                "partnerCode" => env('IDCS_USERNAME'),
                 "partnerPassword" => env('IDCS_PASSWORD'),
-                "Branding" => ""
+                "Branding" => env('IDCS_USERNAME')
             ]
         ];
 
