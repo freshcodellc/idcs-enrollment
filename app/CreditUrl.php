@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class CreditUrl extends Model
 {
@@ -11,5 +12,5 @@ class CreditUrl extends Model
      *
      * @var array
      */
-    protected $fillable = ['user_id', 'url'];
+    protected $fillable = ['user_id', 'url', 'sale_id'];
 }
