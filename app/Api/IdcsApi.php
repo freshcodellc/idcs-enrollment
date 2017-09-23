@@ -24,6 +24,12 @@ class IdcsApi
         $this->user = $user;
     }
 
+    /**
+     * Enroll user with IDCS
+     *
+     * @return bool|mixed Bool result or new IDSC Credit URL
+     * @throws \Exception
+     */
     public function enroll()
     {
         $client = new \SoapClient($this->endpoints['enroll'], array(
@@ -41,11 +47,11 @@ class IdcsApi
         try {
             $result_xml = $client->IDSEnrollmentXML($parameters);
 
-            //echo "<h3>RESULT:</h3><pre>";
-            //print_r($result_xml);
-            //echo "</pre>";
-
-
+            if (env("APP_DEBUG")) {
+                echo "<h3>RESULT:</h3><pre>";
+                print_r($result_xml);
+                echo "</pre>";
+            }
 
         } catch (\Exception $e) {
             if (env("APP_DEBUG")) {
@@ -63,9 +69,11 @@ class IdcsApi
 
         // Save Credit URL for user
         $result = new \SimpleXMLElement($result_xml->IDSEnrollmentXMLResult->any);
-        //echo "<h3>RESULT out of XML:</h3><pre>";
-        //print_r($result);
-        //echo "</pre>";
+        if (env("APP_DEBUG")) {
+            echo "<h3>RESULT out of XML:</h3><pre>";
+            print_r($result);
+            echo "</pre>";
+        }
 
         $credit_url = new CreditUrl;
 
@@ -73,17 +81,26 @@ class IdcsApi
             if (isset($result->CreditReportInfo->CreditReportUrl)) {
                 $credit_url->url = $result->CreditReportInfo->CreditReportUrl;
                 $credit_url->sale_id = $result->SaleId;
+                $credit_url->user_id = $this->user->id;
                 $credit_url->save();
+
+                return $credit_url->url;
             }
         } else {
             // fail response
             if ($result->ErrorCode == "PART_608_F") {
                 // duplicate memberId, so lets get the existing credit url
                 // this is broke ---> $this->getExistingCreditUrl();
+                return true;
+            }
+
+            if ($result->ErrorCode == "IDSW_603_F") {
+                // email already used on another enrollment
+                return false;
             }
         }
 
-        return $result;
+        return false;
     }
 
     public function getExistingCreditUrl()
@@ -160,7 +177,7 @@ class IdcsApi
                 "PackageId" => env('IDCS_PACKAGE'),
                 "ProductUser" => [
                     "Memberid" => $this->user->uuid,
-                    "EmailAddress" => "test321@test.com",
+                    "EmailAddress" => $this->user->email,
                     "Password" => "123Password321",
                     "Address" => [
                         "Address1" => $this->user->address,
