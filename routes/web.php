@@ -20,3 +20,6 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home/enroll', 'HomeController@enroll')->name('enroll');
 Route::get('/home/kba', 'KbaController@index')->name('kba');
+
+Route::get('/report', 'ReportController@index')->name('report');
+Route::post('/report', 'ReportController@charge')->name('charge_report');

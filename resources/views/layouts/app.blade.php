@@ -106,5 +106,6 @@
             @yield('viewJquery');
         });
     </script>
+    @yield('moreJS')
 </body>
 </html>

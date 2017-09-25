@@ -38,19 +38,8 @@ class HomeController extends Controller
             $this->credit_url = new CreditUrl();
         }
 
-        // check if credit_url has a kba success result and if payment has been collected
-        $show_credit_report = false;
-        if ($this->credit_url->kba_result) {
-            // TODO: We should be checking for Stripe payment here
-
-            $show_credit_report = true;
-
-
-        }
-
         return view('home', [
-            'credit_url' => $this->credit_url,
-            'show_credit_report' => $show_credit_report
+            'credit_url' => $this->credit_url
         ]);
     }
 

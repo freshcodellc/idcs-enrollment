@@ -47,18 +47,21 @@
         </a>
         @endif
 
-        @if ($credit_url->url)
+        @if ($credit_url->url && !$credit_url->kba_result)
         <button type="button"
                 class="btn btn-primary"
                 data-toggle="modal"
                 data-target="#creditReportModal">
-            @if ($credit_url->kba_result)
-            View Credit Report
-            @else
             Verify Identity
-            @endif
         </button>
         @endif
+
+        @if ($credit_url->kba_result)
+        <a type="button" class="btn btn-primary" href="{{ route('report') }}">
+            View Credit Report
+        </a>
+        @endif
+
     </div>
 
     @if ($credit_url->url)
