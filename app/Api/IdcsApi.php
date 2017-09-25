@@ -5,6 +5,8 @@ namespace App\Api;
 use App\CreditUrl;
 use \Illuminate\Contracts\Auth\Authenticatable;
 
+class IdcsApiException extends \Exception {}
+
 class IdcsApi
 {
     private $user = null;
@@ -27,7 +29,7 @@ class IdcsApi
     /**
      * Enroll user with IDCS
      *
-     * @return bool|mixed Bool result or new IDSC Credit URL
+     * @return CreditUrl
      * @throws \Exception
      */
     public function enroll()
@@ -77,30 +79,30 @@ class IdcsApi
 
         $credit_url = new CreditUrl;
 
-        if ($result->Status == "SUCCESS") {
-            if (isset($result->CreditReportInfo->CreditReportUrl)) {
-                $credit_url->url = $result->CreditReportInfo->CreditReportUrl;
-                $credit_url->sale_id = $result->SaleId;
-                $credit_url->user_id = $this->user->id;
-                $credit_url->save();
-
-                return $credit_url->url;
-            }
+        if ($result->Status == "SUCCESS" && isset($result->CreditReportInfo->CreditReportUrl)) {
+            $credit_url->url = $result->CreditReportInfo->CreditReportUrl;
+            $credit_url->sale_id = $result->SaleId;
+            $credit_url->user_id = $this->user->id;
+            $credit_url->save();
         } else {
             // fail response
             if ($result->ErrorCode == "PART_608_F") {
                 // duplicate memberId, so lets get the existing credit url
-                // this is broke ---> $this->getExistingCreditUrl();
-                return true;
+
+                //TODO: Get existing Credit URL for user and update
+                // this is broke
+                // --> $this->getExistingCreditUrl();
+
+                throw new IdcsApiException("You are already enrolled.");
             }
 
             if ($result->ErrorCode == "IDSW_603_F") {
                 // email already used on another enrollment
-                return false;
+                throw new IdcsApiException("Email already in use.");
             }
         }
 
-        return false;
+        return $credit_url;
     }
 
     public function getExistingCreditUrl()
@@ -178,7 +180,7 @@ class IdcsApi
                 "ProductUser" => [
                     "Memberid" => $this->user->uuid,
                     "EmailAddress" => $this->user->email,
-                    "Password" => "123Password321",
+                    "Password" => str_random(12),
                     "Address" => [
                         "Address1" => $this->user->address,
                         "Address2" => "",
