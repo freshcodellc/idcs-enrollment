@@ -19,3 +19,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home/enroll', 'HomeController@enroll')->name('enroll');
+Route::get('/home/kba', 'KbaController@index')->name('kba');

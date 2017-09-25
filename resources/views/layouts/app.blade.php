@@ -67,10 +67,44 @@
             </div>
         </nav>
 
+        <div class="container">
+            <div class="row">
+
+                @if (isset($success) && !empty($success))
+                <div class="col-md-8 col-md-offset-2 alert alert-success" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{ $success }}
+                </div>
+                @endif
+
+                @if (isset($error) && !empty($error))
+                <div class="col-md-8 col-md-offset-2 alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{ $error }}
+                </div>
+                @endif
+
+            </div>
+        </div>
+
         @yield('content')
     </div>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+
+    <script>
+        window.closeCreditReportModal = function() {
+            $('#creditReportModal').modal('hide');
+        };
+
+        jQuery(document).ready(function() {
+            @yield('viewJquery');
+        });
+    </script>
 </body>
 </html>
