@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Auth;
 class HomeController extends Controller
 {
     /**
+     * @var CreditUrl
+     */
+    private $credit_url;
+
+    /**
      * Create a new controller instance.
      *
      * @return void
@@ -27,39 +32,51 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $credit_urls = CreditUrl::where('user_id', Auth::user()->id)->get();
+        $this->credit_url = CreditUrl::where('user_id', Auth::user()->id)->first();
 
-        $credit_url = false;
-        if (isset($credit_urls[0]->url)) {
-            $credit_url = $credit_urls[0]->url;
+        if (empty($this->credit_url)) {
+            $this->credit_url = new CreditUrl();
+        }
+
+        // check if credit_url has a kba success result and if payment has been collected
+        $show_credit_report = false;
+        if ($this->credit_url->kba_result) {
+            // TODO: We should be checking for Stripe payment here
+
+            $show_credit_report = true;
+
+
         }
 
         return view('home', [
-            'credit_url' => $credit_url
+            'credit_url' => $this->credit_url,
+            'show_credit_report' => $show_credit_report
         ]);
     }
 
     public function enroll()
     {
-        $credit_urls = CreditUrl::where('user_id', Auth::user()->id)->get();
+        $view_params = [];
+        $this->credit_url = CreditUrl::where('user_id', Auth::user()->id)->first();
 
-        if (count($credit_urls) == 0) {
+        if (empty($this->credit_url)) {
             // user does not have a credit url, so enroll
             $idcs_api = new IdcsApi(Auth::user());
 
-            $credit_url = $idcs_api->enroll();
-
-            if ($credit_url) {
-                return view('home', [
-                    'success' => "Success! You are enrolled.",
-                    'credit_url' => $credit_url
-                ]);
-            } else {
-                return view('home', [
-                    'error' => "Sorry! An error has occurred during enrollment.",
-                    'credit_url' => false
-                ]);
+            try {
+                $this->credit_url = $idcs_api->enroll();
+            } catch (\App\Api\IdcsApiException $e) {
+                $view_params['error'] = $e->getMessage();
+                $this->credit_url = new CreditUrl;
             }
+
+            if (!empty($this->credit_url->url)) {
+                $view_params['success'] = "Success! You are enrolled.";
+            }
+
+            $view_params['credit_url'] = $this->credit_url;
+
+            return view('home', $view_params);
         } else {
             return redirect('home')->with('success', 'Success! You are already enrolled.');
         }
