@@ -1,0 +1,68 @@
+// See Your Score (sys) Styles by Neum
+// -----------------------------------
+
+// Top Bar
+.sys-logo {
+    display: block;
+    margin: 10px 0;
+}
+.navbar-static-top {
+    border-width: 0 0 20px;
+    margin-bottom: 50px;
+}
+.navbar-default {
+    border-color: #2faee2;
+}
+
+// Layout
+.mpoints {
+    margin: 40px 0 50px;
+}
+.midcenter {
+    h4 {
+        text-align: center;
+    }
+}
+
+.lined {
+    // border-top: 2px solid #808080;
+    // border-bottom: 2px solid #808080;
+    padding: 20px 0 30px;
+    background: #E2E5E7;
+}
+.center-feature {
+    border: 2px solid #A5A4A4;
+    border-radius: 10px;
+    position: relative;
+    z-index: 100;
+    padding: 100px 10px 20px;
+    height: 500px;
+    margin: -50px 0 -70px;
+    background-color: #fff;
+    box-shadow: 5px 5px #DFDFDF;
+}
+.startbtn {
+    margin: 30px 0;
+}
+
+// Typography
+.grey-text {
+    color: #808080;
+}
+.bureau {
+    margin-bottom: 5px;
+}
+.mheadline {
+    margin-top: 5px;
+}
+
+
+// Responsive stuff
+// ================
+// Medium devices (desktops, 992px and up)
+@media (min-width: 992px) { 
+    .vroof {
+        margin: 22px 0 0;
+    }
+ }
+// end Medium devices

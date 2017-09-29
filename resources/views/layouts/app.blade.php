@@ -11,7 +11,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/score.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -27,7 +27,7 @@
                         <span class="icon-bar"></span>
                     </button>
 
-
+                    <a class="sys-logo" href="/"><img src="{{ asset('i/logo.jpg') }}" alt="See Your Score Logo"></a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
