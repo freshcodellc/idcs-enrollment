@@ -5924,6 +5924,10 @@ button.close {
 .navbar-default {
   border-color: #2faee2; }
 
+.bureau {
+  margin: 24px 0 0 40px;
+  float: right; }
+
 .mpoints {
   margin: 40px 0 50px; }
 
@@ -5957,9 +5961,33 @@ button.close {
 .mheadline {
   margin-top: 5px; }
 
+.thesteps {
+  background: #0B51A1;
+  padding: 20px;
+  margin: 0 auto 30px;
+  border-radius: 4px;
+  text-align: center; }
+  .thesteps li {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 0 15px;
+    background: #fff;
+    border-radius: 4px; }
+  .thesteps .comped {
+    background: #2faee2;
+    color: #fff; }
+
+.accountsub {
+  margin-top: 25px; }
+
 @media (min-width: 992px) {
   .vroof {
     margin: 22px 0 0; } }
+
+@media (max-width: 768px) {
+  .thesteps li {
+    margin: 10px 0;
+    display: block; } }
 
 .modal-body.iframe {
   height: 600px;

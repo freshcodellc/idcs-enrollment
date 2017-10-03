@@ -13,6 +13,10 @@
 .navbar-default {
     border-color: #2faee2;
 }
+.bureau {
+    margin: 24px 0 0 40px;
+    float: right;
+}
 
 // Layout
 .mpoints {
@@ -57,6 +61,30 @@
 }
 
 
+// The Steps
+.thesteps {
+    background: #0B51A1;
+    padding: 20px;
+    margin: 0 auto 30px;
+    border-radius: 4px;
+    text-align: center;
+    li {
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 0 15px;
+        background: #fff;
+        border-radius: 4px;
+    }
+    .comped {
+        background: #2faee2;
+        color: #fff;
+    }
+}
+.accountsub {
+    margin-top: 25px;
+}
+
+
 // Responsive stuff
 // ================
 // Medium devices (desktops, 992px and up)
@@ -66,3 +94,11 @@
     }
  }
 // end Medium devices
+
+// Small stuff
+@media (max-width: 768px) {
+    .thesteps li {
+        margin: 10px 0;
+        display: block;
+    }
+}
