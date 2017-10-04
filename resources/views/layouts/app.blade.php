@@ -12,6 +12,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/score.css') }}" rel="stylesheet">
+    <script src="{{ asset('js/fontawesome.js') }}"></script>
+    <script src="{{ asset('js/packs/solid.js') }}"></script>
 </head>
 <body>
     <div id="app">
@@ -98,6 +100,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    {{--  <script src="{{ asset('js/bootstrap.js') }}"></script>  --}}
 
     <script>
         window.closeCreditReportModal = function() {

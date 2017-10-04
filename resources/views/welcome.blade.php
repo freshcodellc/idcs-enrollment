@@ -110,5 +110,37 @@
         </div>
     </div>
 </div>
+{{--  End Grey row  --}}
+
+<div class="container">
+    <div class="row iconrow">
+        <div class="col-md-4 text-center">
+            <i class="fa fa-tablet-alt fa-4x"></i>
+            <h4>Access Anytime</h4>
+        </div>
+        <div class="col-md-4 text-center">
+            <i class="fa fa-lock-alt fa-4x"></i>
+            <h4>Secure Online Delivery</h4>        
+        </div>
+        <div class="col-md-4 text-center">
+            <i class="fa fa-shield-check fa-4x"></i>
+            <h4>24/7 Credit Monitoring</h4>         
+        </div>
+    </div>
+    <div class="row iconrow">
+        <div class="col-md-4 text-center">
+            <i class="fa fa-check-circle fa-4x"></i>
+            <h4>All 3 Bureaus</h4>
+        </div>
+        <div class="col-md-4 text-center">
+            <i class="fa fa-sign-out fa-4x"></i>
+            <h4>Easy Online Cancellation</h4>        
+        </div>
+        <div class="col-md-4 text-center">
+            <i class="fa fa-bolt fa-4x"></i>
+            <h4>Fast Access</h4>         
+        </div>
+    </div>   
+</div>
 
 @endsection

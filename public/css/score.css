@@ -5944,19 +5944,21 @@ button.close {
   position: relative;
   z-index: 100;
   padding: 30px 10px 20px;
-  height: 500px;
   margin: -50px 0 -70px;
   background-color: #fff;
-  box-shadow: 5px 5px #DFDFDF; }
+  box-shadow: 5px 5px #DFDFDF;
+  height: 100%; }
 
 .startform {
   margin-top: 30px; }
 
-.startformfield {
-  padding-left: 0; }
-
 .startbtn {
   margin: 20px 0; }
+
+.iconrow {
+  margin: 80px 0; }
+  .iconrow h4 {
+    margin-top: 25px; }
 
 .grey-text {
   color: #808080; }
@@ -5988,12 +5990,17 @@ button.close {
 
 @media (min-width: 992px) {
   .vroof {
-    margin: 22px 0 0; } }
+    margin: 22px 0 0; }
+  .startformfield {
+    padding-left: 0;
+    padding-right: 30px; } }
 
 @media (max-width: 768px) {
   .thesteps li {
     margin: 10px 0;
-    display: block; } }
+    display: block; }
+  .center-feature {
+    margin-bottom: 40px; } }
 
 .modal-body.iframe {
   height: 600px;
