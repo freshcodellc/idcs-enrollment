@@ -24,12 +24,14 @@
                                     <td>@if ($credit_url->url) <span class="text-success">Yes</span> @else <span class="text-danger">No</span> @endif</td>
                                 </tr>
                                 <tr>
+                                    <td class="text-right">Payment Status</td>
+                                    <td>@if ($credit_url->charge_id) <span class="text-success">Paid</span> @else <span class="text-danger">Outstanding</span> @endif</td>
+                                </tr>
+                                <tr>
                                     <td class="text-right">ID Verified</td>
                                     <td>@if ($credit_url->kba_result) <span class="text-success">Yes</span> @else <span class="text-danger">No</span> @endif</td>
                                 </tr>
                             </table>
-
-                            {{ $credit_url->url }}
 
                         </div>
                     </div>
@@ -41,18 +43,22 @@
     @endif
 
     <div class="row text-center">
-        @if (!$credit_url->url)
-        <a type="button" class="btn btn-primary" href="{{ route('enroll') }}">
-            Enroll
+        @if ($credit_url->url && empty($credit_url->charge_id))
+        <a type="button" class="btn btn-primary" href="{{ route('report') }}">
+            Pay $1 to View Report
         </a>
         @endif
 
-        @if ($credit_url->url && !$credit_url->kba_result)
+        @if ($credit_url->url && $credit_url->charge_id > 0)
         <button type="button"
                 class="btn btn-primary"
                 data-toggle="modal"
                 data-target="#creditReportModal">
+            @if (!$credit_url->kba_result)
             Verify Identity
+            @else
+            View Credit Report
+            @endif
         </button>
         @endif
 

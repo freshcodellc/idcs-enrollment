@@ -13,7 +13,7 @@
                 class="btn btn-primary"
                 data-toggle="modal"
                 data-target="#creditReportModal">
-            View Credit Report
+            @if ($credit_url->kba_result) View Credit Report @else Verify Identity @endif
         </button>
 
         <!-- Modal -->

@@ -37,9 +37,10 @@ class ReportController extends Controller
         $view_params['stripe_key'] = env('APP_DEBUG') ? env('STRIPE_KEY_TEST_PUBLISHABLE') : env('STRIPE_KEY_PUBLISHABLE');
         $view_params['credit_url'] = $this->credit_url;
 
+        /*
         if (empty($this->credit_url->kba_result)) {
             return redirect('home')->with('errors', 'Credit report not viewable at this time. Please ensure your identity has been verified.');
-        }
+        }*/
 
         return view('report', $view_params);
     }
