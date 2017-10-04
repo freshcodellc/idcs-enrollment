@@ -39,14 +39,20 @@
     border-radius: 10px;
     position: relative;
     z-index: 100;
-    padding: 100px 10px 20px;
+    padding: 30px 10px 20px;
     height: 500px;
     margin: -50px 0 -70px;
     background-color: #fff;
     box-shadow: 5px 5px #DFDFDF;
 }
+.startform {
+    margin-top: 30px;
+}
+.startformfield {
+    padding-left: 0;
+}
 .startbtn {
-    margin: 30px 0;
+    margin: 20px 0;
 }
 
 // Typography
