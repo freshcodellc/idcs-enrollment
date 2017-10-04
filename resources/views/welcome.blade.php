@@ -36,9 +36,67 @@
                 <p>Get your full credit report from all three credit reporting agencies in minutes.</p>
                 <p><em>Checking your credit will not harm your score.</em></p>
                 @if (empty(Auth::user()->id))
-                <a class="btn btn-primary btn-lg btn-warning text-center startbtn" href="{{ route('register') }}">
-                    GET STARTED NOW
-                </a>
+
+                <form class="form-horizontal" method="POST">
+                    {{ csrf_field() }}
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
+                                <label for="first_name" class="col-md-4 control-label">First Name</label>
+                                <div class="col-md-8">
+                                    <input id="first_name" type="text" class="form-control" name="first_name" value="{{ old('first_name') }}" placeholder="First Name" required>
+
+                                    @if ($errors->has('first_name'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('first_name') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group{{ $errors->has('last_name') ? ' has-error' : '' }}">
+                                <label for="last_name" class="col-md-4 control-label">Last Name</label>
+
+                                <div class="col-md-8">
+                                    <input id="last_name" type="text" class="form-control" name="last_name" value="{{ old('last_name') }}" placeholder="Last Name" required>
+
+                                    @if ($errors->has('last_name'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('last_name') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                                <label for="email" class="col-md-4 control-label">Email</label>
+
+                                <div class="col-md-8">
+                                    <input id="email" type="text" class="form-control" name="email" value="{{ old('email') }}" placeholder="Email" required>
+
+                                    @if ($errors->has('email'))
+                                    <span class="help-block">
+                                    <strong>{{ $errors->first('email') }}</strong>
+                                </span>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-lg btn-warning text-center startbtn">
+                        GET STARTED NOW
+                    </button>
+                </form>
                 @else
                 <a class="btn btn-primary btn-lg btn-warning text-center startbtn" href="{{ route('home') }}">
                     Go to My Account

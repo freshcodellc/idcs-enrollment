@@ -11,9 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'WelcomeController@index')->name("welcome");
+Route::post('/', 'WelcomeController@getStarted')->name("get_started");
 
 Auth::routes();
 
