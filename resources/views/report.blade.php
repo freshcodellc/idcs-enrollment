@@ -46,7 +46,7 @@
         data-label="Pay $1 to View Report"
         data-name="{{ config('app.name') }}"
         data-description="Credit Report"
-        data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+        data-image="/i/sys-square.jpg"
         data-locale="auto"
         data-zip-code="true">
     </script>
