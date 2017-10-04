@@ -53,12 +53,11 @@ class HomeController extends Controller
             // user does not have a credit url, so enroll
             $idcs_api = new IdcsApi(Auth::user());
 
-            try {
-                $this->credit_url = $idcs_api->enroll();
-            } catch (IdcsApiException $e) {
-                $this->errors[] = $e->getMessage();
-                $this->credit_url = new CreditUrl;
+            $enroll_response = $idcs_api->enroll();
+            if (isset($enroll_response['credit_url'])) {
+                $this->credit_url = $enroll_response['credit_url'];
             }
+            $this->errors = array_merge($enroll_response['errors'], $this->errors);
         }
     }
 

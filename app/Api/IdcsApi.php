@@ -4,6 +4,7 @@ namespace App\Api;
 
 use App\CreditUrl;
 use \Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Support\Facades\Log;
 
 class IdcsApiException extends \Exception {}
 
@@ -77,6 +78,7 @@ class IdcsApi
             echo "</pre>";
         }
 
+        $errors = [];
         $credit_url = new CreditUrl;
 
         if ($result->Status == "SUCCESS" && isset($result->CreditReportInfo->CreditReportUrl)) {
@@ -92,17 +94,21 @@ class IdcsApi
                 //TODO: Get existing Credit URL for user and update
                 // this is broke
                 // --> $this->getExistingCreditUrl();
-
-                throw new IdcsApiException("You are already enrolled.");
+                Log::notice("User id {$this->user->id} is already enrolled. Credit URL might be missing.");
             }
 
             if ($result->ErrorCode == "IDSW_603_F") {
                 // email already used on another enrollment
-                throw new IdcsApiException("Email already in use.");
+                $error = "Email ({$this->user->email}) is already in use on another enrollment";
+                $errors[] = $error;
+                Log::error($error);
             }
         }
 
-        return $credit_url;
+        return [
+            'credit_url' => $credit_url,
+            'errors' => $errors
+        ];
     }
 
     public function getExistingCreditUrl()
