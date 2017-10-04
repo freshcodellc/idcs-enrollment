@@ -17,7 +17,7 @@ class CreateChargesTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('stripe_id', 50);
-            $table->integer('amount')->unsingeed();
+            $table->integer('amount')->unsigned();
             $table->timestamps();
         });
     }
