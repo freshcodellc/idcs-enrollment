@@ -19,12 +19,23 @@
 }
 
 // Layout
+.margin-top-row {
+    margin-top: 50px;
+}
 .mpoints {
     margin: 40px 0 50px;
 }
 .midcenter {
     h4 {
         text-align: center;
+    }
+}
+.spaced-row {
+    margin: 40px 0;
+}
+.thesidebar {
+    h4 {
+        margin-top: 0;
     }
 }
 
@@ -59,6 +70,28 @@
         margin-top: 25px;
     }
 }
+
+.before-footer-row {
+    margin-bottom: 80px;
+}
+
+// Sticky Footer
+$height-footer: 359px;
+html {
+    min-height: 100%;
+    position: relative;
+    body {
+      margin-bottom: $height-footer;
+    }
+    footer {
+      bottom: 0;
+      width: 100%;
+      position: absolute;
+      height: $height-footer;
+      background: #E2E5E7;
+      padding: 80px 0;
+    }
+  }
 
 // Typography
 .grey-text {

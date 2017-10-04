@@ -5928,11 +5928,20 @@ button.close {
   margin: 24px 0 0 40px;
   float: right; }
 
+.margin-top-row {
+  margin-top: 50px; }
+
 .mpoints {
   margin: 40px 0 50px; }
 
 .midcenter h4 {
   text-align: center; }
+
+.spaced-row {
+  margin: 40px 0; }
+
+.thesidebar h4 {
+  margin-top: 0; }
 
 .lined {
   padding: 20px 0 30px;
@@ -5959,6 +5968,22 @@ button.close {
   margin: 80px 0; }
   .iconrow h4 {
     margin-top: 25px; }
+
+.before-footer-row {
+  margin-bottom: 80px; }
+
+html {
+  min-height: 100%;
+  position: relative; }
+  html body {
+    margin-bottom: 359px; }
+  html footer {
+    bottom: 0;
+    width: 100%;
+    position: absolute;
+    height: 359px;
+    background: #E2E5E7;
+    padding: 80px 0; }
 
 .grey-text {
   color: #808080; }

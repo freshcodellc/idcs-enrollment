@@ -98,9 +98,23 @@
         @yield('content')
     </div>
 
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-push-1">
+                <p><i class="fa fa-copyright"></i> SeeYourScore - All Rights Reserved</p>
+                <p class="small">Important Information: The credit score you receive from us may not be the same scores used by lenders or other commercial users for credit decisions. There are various types of credit scores, and lenders may use a different type of credit score to make lending decisions that are different than the ones we offer.</p>
+
+                <p class="small">Under federal law you have the right to receive a <em>credit report</em> from each of the three nationwide consumer reporting agencies once every 12 months. A Credit Score is not included.</p>
+
+                <p class="small">After verification of your identity, your scores are available for immediate online, secure delivery. Scores shown in design are for illustrative purposes only.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
-    {{--  <script src="{{ asset('js/bootstrap.js') }}"></script>  --}}
 
     <script>
         window.closeCreditReportModal = function() {
