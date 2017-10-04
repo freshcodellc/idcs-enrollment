@@ -38,7 +38,7 @@ class ReportController extends Controller
         $view_params['credit_url'] = $this->credit_url;
 
         if (empty($this->credit_url->kba_result)) {
-            return redirect('home')->with('error', 'Credit report not viewable at this time. Please ensure your identity has been verified.');
+            return redirect('home')->with('errors', 'Credit report not viewable at this time. Please ensure your identity has been verified.');
         }
 
         return view('report', $view_params);
@@ -79,7 +79,7 @@ class ReportController extends Controller
             $this->credit_url->save();
         } catch (\Exception $e) {
             return view('report', [
-                'error' => 'Credit card charge was unable to process.',
+                'errors' => 'Credit card charge was unable to process.',
                 'credit_url' => $this->credit_url
             ]);
         }

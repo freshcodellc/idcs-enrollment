@@ -79,13 +79,15 @@
                 </div>
                 @endif
 
-                @if (isset($error) && !empty($error))
+                @if (isset($errors) && !empty($errors))
+                @foreach ($errors as $error)
                 <div class="col-md-8 col-md-offset-2 alert alert-danger" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                     {{ $error }}
                 </div>
+                @endforeach
                 @endif
 
             </div>

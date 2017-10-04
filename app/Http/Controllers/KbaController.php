@@ -37,7 +37,7 @@ class KbaController extends Controller
             return view('kba', ['success' => "Success! Identity verified."]);
         } else {
             // KBA was not successful, show error message
-            return view('kba', ['error' => "Sorry! There was an error during ID verification. Please close this window and try again."]);
+            return view('kba', ['errors' => "Sorry! There was an error during ID verification. Please close this window and try again."]);
         }
     }
 

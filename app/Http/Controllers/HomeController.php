@@ -16,6 +16,11 @@ class HomeController extends Controller
     private $credit_url;
 
     /**
+     * @var array Array of errors to display to provide to the resulting view
+     */
+    private $errors = [];
+
+    /**
      * Create a new controller instance.
      *
      * @return void
@@ -32,20 +37,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $this->credit_url = CreditUrl::where('user_id', Auth::user()->id)->first();
-
-        if (empty($this->credit_url)) {
-            $this->credit_url = new CreditUrl();
-        }
+        $this->getOrEnrollCreditUrl();
 
         return view('home', [
-            'credit_url' => $this->credit_url
+            'credit_url' => $this->credit_url,
+            'errors' => $this->errors
         ]);
     }
 
-    public function enroll()
+    public function getOrEnrollCreditUrl()
     {
-        $view_params = [];
         $this->credit_url = CreditUrl::where('user_id', Auth::user()->id)->first();
 
         if (empty($this->credit_url)) {
@@ -54,20 +55,10 @@ class HomeController extends Controller
 
             try {
                 $this->credit_url = $idcs_api->enroll();
-            } catch (\App\Api\IdcsApiException $e) {
-                $view_params['error'] = $e->getMessage();
+            } catch (IdcsApiException $e) {
+                $this->errors[] = $e->getMessage();
                 $this->credit_url = new CreditUrl;
             }
-
-            if (!empty($this->credit_url->url)) {
-                $view_params['success'] = "Success! You are enrolled.";
-            }
-
-            $view_params['credit_url'] = $this->credit_url;
-
-            return view('home', $view_params);
-        } else {
-            return redirect('home')->with('success', 'Success! You are already enrolled.');
         }
     }
 
