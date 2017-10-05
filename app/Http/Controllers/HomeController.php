@@ -117,20 +117,28 @@ class HomeController extends Controller
         return view('home', $view_params);
     }
 
-    private function createSubscriptionPlan() {
+    protected function createSubscriptionPlan() {
         $stripe_secret_key = env('APP_ENV') == "local" ? env('STRIPE_KEY_TEST_SECRET') : env('STRIPE_KEY_SECRET');
 
         \Stripe\Stripe::setApiKey($stripe_secret_key);
-        $plan = \Stripe\Plan::create(array(
-            "amount" => 2900,
-            "interval" => "month",
-            "name" => "Credit Report Subscription",
-            "currency" => "usd",
-            "id" => "credit-report-sub",
-            "trial_period_days" => 7
-        ));
+        try {
+            $plan = \Stripe\Plan::create(array(
+                "amount" => 2900,
+                "interval" => "month",
+                "name" => "Credit Report Subscription",
+                "currency" => "usd",
+                "id" => "credit-report-sub",
+                "trial_period_days" => 7
+            ));
+        } catch (\Exception $e) {
+            if (stripos($e->getMessage(), "Plan already exists") !== false) {
+                echo "Plan already created with id of 'credit-report-sub'";
+                die();
+            }
+        }
 
-        return $plan;
+        echo "Plan successfully created with id of 'credit-report-sub'";
+        die();
     }
 
     /**
