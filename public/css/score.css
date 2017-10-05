@@ -5995,11 +5995,9 @@ html {
   margin-top: 5px; }
 
 .thesteps {
-  background: #0B51A1;
   padding: 20px;
-  margin: 0 auto 30px;
-  border-radius: 4px;
-  text-align: center; }
+  margin: 0 0 30px;
+  border-radius: 4px; }
   .thesteps li {
     display: inline-block;
     padding: 10px 20px;

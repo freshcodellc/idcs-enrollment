@@ -14,6 +14,7 @@
     <link href="{{ asset('css/score.css') }}" rel="stylesheet">
     <script src="{{ asset('js/fontawesome.js') }}"></script>
     <script src="{{ asset('js/packs/solid.js') }}"></script>
+    <script src="{{ asset('js/packs/regular.js') }}"></script>
 </head>
 <body>
     <div id="app">

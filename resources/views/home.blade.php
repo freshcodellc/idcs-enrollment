@@ -6,9 +6,9 @@
     <div class="row">
         <div class="col-md-12">
             <ul class="thesteps">
-                <li>1. Create Account <i class="fa fa-check"></i></li>
-                <li class="comped">2. Review & Pay</li>
-                <li>3. Verify & View Report</li>
+                <li><i class="far fa-check-square"></i> Step 1: Account</li>
+                <li><i class="far fa-square"></i> Step 2: Pay $1</li>
+                <li><i class="far fa-square"></i> Step 3: Verify & View Report</li>
             </ul>
         </div>
     </div>
