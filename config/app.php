@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Credit Project'),
+    'name' => env('APP_NAME', 'See Your Score'),
 
     /*
     |--------------------------------------------------------------------------
