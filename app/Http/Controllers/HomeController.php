@@ -40,9 +40,10 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->getOrEnrollCreditUrl();
         $this->stripe_customer = StripeCustomer::where('user_id', Auth::user()->id)->first();
@@ -53,7 +54,8 @@ class HomeController extends Controller
             'stripe_key' => $stripe_key,
             'stripe_customer' => $this->stripe_customer,
             'credit_url' => $this->credit_url,
-            'errors' => $this->errors
+            'errors' => $this->errors,
+            'success' => $request->input('success')
         ]);
     }
 
@@ -105,16 +107,14 @@ class HomeController extends Controller
             $this->subscribe("credit-report-sub");
         }
 
-        $view_params['stripe_key'] = $stripe_key;
-        $view_params['stripe_customer'] = $this->stripe_customer;
-        $view_params['credit_url'] = $this->credit_url;
-        $view_params['errors'] = $this->errors;
+        $get_params['errors'] = $this->errors;
 
         if (isset($this->stripe_customer->subscription_id) && !empty($this->stripe_customer->subscription_id)) {
-            $view_params['success'] = "Success! Credit card charged and subscription setup.";
+            $get_params['success'] = "Success! Credit card charged and subscription setup.";
         }
 
-        return view('home', $view_params);
+        // redirect back home
+        return redirect()->route('home', $get_params);
     }
 
     protected function createSubscriptionPlan() {
