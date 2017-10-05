@@ -14,5 +14,13 @@
         <div class="col-md-10">
             <h4>$1M in credit restoration protection.</h4>
         </div>
+    </div>
+    <div class="row spaced-row">
+        <div class="col-md-2">
+            <i class="far fa-phone fa-3x"></i>
+        </div>
+        <div class="col-md-10">
+            <h4>Call Us: 888-876-6610</h4>
+        </div>
     </div>    
 </div>
