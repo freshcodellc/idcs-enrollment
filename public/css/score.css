@@ -6011,6 +6011,10 @@ html {
 .accountsub {
   margin-top: 25px; }
 
+.stripe-button-el span {
+  padding: 12px 22px !important;
+  height: 56px !important; }
+
 @media (min-width: 992px) {
   .vroof {
     margin: 22px 0 0; }

@@ -126,6 +126,14 @@ html {
     margin-top: 25px;
 }
 
+// Stripe Checkout
+.stripe-button-el {
+    span {
+        padding: 12px 22px !important;
+        height: 56px !important;
+    }
+}
+
 
 // Responsive stuff
 // ================

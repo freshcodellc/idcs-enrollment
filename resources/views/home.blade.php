@@ -62,7 +62,7 @@
 
         @if ($credit_url->url && $credit_url->charge_id > 0 && $stripe_customer->subscription_id)
         <button type="button"
-                class="btn btn-primary"
+                class="btn btn-primary btn-lg"
                 data-toggle="modal"
                 data-target="#creditReportModal">
             @if (!$credit_url->kba_result)
