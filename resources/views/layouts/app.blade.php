@@ -115,6 +115,7 @@
     </footer>
 
     <!-- Scripts -->
+    <!-- This script conflicts with Stripe's Checkout -->
     <script src="{{ asset('js/app.js') }}"></script>
 
     <script>
@@ -123,7 +124,7 @@
         };
 
         jQuery(document).ready(function() {
-            @yield('viewJquery');
+            @yield('viewJquery')
         });
     </script>
     @yield('moreJS')

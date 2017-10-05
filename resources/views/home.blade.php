@@ -45,12 +45,22 @@
 
     <div class="row text-center before-footer-row">
         @if ($credit_url->url && empty($credit_url->charge_id))
-        <a type="button" class="btn btn-primary" href="{{ route('report') }}">
-            Pay $1 to View Report
-        </a>
+        <form action="{{ route('charge_payment') }}" method="POST">
+            {{ csrf_field() }}
+            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                    data-key="{{ $stripe_key }}"
+                    data-amount="100"
+                    data-label="Pay $1 to View Report"
+                    data-name="{{ config('app.name') }}"
+                    data-description="Credit Report"
+                    data-image="{{ secure_asset('i/sys-square.jpg') }}"
+                    data-locale="auto"
+                    data-zip-code="true">
+            </script>
+        </form>
         @endif
 
-        @if ($credit_url->url && $credit_url->charge_id > 0)
+        @if ($credit_url->url && $credit_url->charge_id > 0 && $stripe_customer->subscription_id)
         <button type="button"
                 class="btn btn-primary"
                 data-toggle="modal"
@@ -61,12 +71,6 @@
             View Credit Report
             @endif
         </button>
-        @endif
-
-        @if ($credit_url->kba_result)
-        <a type="button" class="btn btn-primary" href="{{ route('report') }}">
-            View Credit Report
-        </a>
         @endif
 
     </div>
