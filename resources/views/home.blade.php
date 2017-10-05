@@ -7,7 +7,7 @@
         <div class="col-md-12">
             <ul class="thesteps">
                 <li><i class="far fa-check-square"></i> Step 1: Account</li>
-                <li><i class="far fa-square"></i> Step 2: Pay $1</li>
+                <li><i class="far @if ($credit_url->charge_id) fa-check-square @else fa-square @endif"></i> Step 2: Pay $1</li>
                 <li><i class="far fa-square"></i> Step 3: Verify & View Report</li>
             </ul>
         </div>
