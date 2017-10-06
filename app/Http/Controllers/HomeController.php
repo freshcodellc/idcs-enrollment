@@ -48,6 +48,10 @@ class HomeController extends Controller
         $this->getOrEnrollCreditUrl();
         $this->stripe_customer = StripeCustomer::where('user_id', Auth::user()->id)->first();
 
+        if (!empty($this->credit_url->charge_id) && empty($this->stripe_customer->subscription_id)) {
+            $this->subscribe();
+        }
+
         $stripe_key = env('APP_ENV') == "local" ? env('STRIPE_KEY_TEST_PUBLISHABLE') : env('STRIPE_KEY_PUBLISHABLE');
 
         return view('home', [
@@ -132,13 +136,15 @@ class HomeController extends Controller
             ));
         } catch (\Exception $e) {
             if (stripos($e->getMessage(), "Plan already exists") !== false) {
-                echo "Plan already created with id of 'credit-report-sub'";
-                die();
+                if (env('APP_DEBUG')) {
+                    echo "Plan already created with id of 'credit-report-sub'";
+                }
             }
         }
 
-        echo "Plan successfully created with id of 'credit-report-sub'";
-        die();
+        if (env('APP_DEBUG')) {
+            echo "Plan successfully created with id of 'credit-report-sub'";
+        }
     }
 
     /**
@@ -199,17 +205,9 @@ class HomeController extends Controller
         } catch (\Stripe\Error\InvalidRequest $e) {
             // check if the plan does not exist
             if (stripos($e->getMessage(), 'No such plan: credit-report-sub') !== false) {
+                $this->createSubscriptionPlan();
                 unset($subscription);
-
             }
-        } catch (\Exception $e) {
-            // something went wrong with subscription setup
-            if (env('APP_DEBUG')) {
-                dump($e->getMessage());
-            }
-
-            //TODO:
-            unset($subscription);
         }
 
         if (!isset($subscription)) {
