@@ -191,6 +191,10 @@ class HomeController extends Controller
     }
 
     protected function subscribe($plan = 'credit-report-sub') {
+        $stripe_secret_key = env('APP_ENV') == "local" ? env('STRIPE_KEY_TEST_SECRET') : env('STRIPE_KEY_SECRET');
+
+        \Stripe\Stripe::setApiKey($stripe_secret_key);
+        
         // subscribe user to $29 per month plan with a 7 day grace period (free trial)
         try {
             $subscription = \Stripe\Subscription::create(array(
