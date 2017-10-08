@@ -11,10 +11,10 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/score.css') }}" rel="stylesheet">
-    <script src="{{ asset('js/fontawesome.js') }}"></script>
     <script src="{{ asset('js/packs/solid.js') }}"></script>
     <script src="{{ asset('js/packs/regular.js') }}"></script>
 
+    <link href="{{ asset('css/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
