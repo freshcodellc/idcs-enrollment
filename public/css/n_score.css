@@ -1,0 +1,9 @@
+/* SYS custom styles */
+.thelogin li {
+  list-style: none; }
+
+.startform .col-md-12 {
+  padding-left: 0; }
+
+.solid-bg-icon {
+  padding-top: 10px; }
