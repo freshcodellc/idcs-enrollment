@@ -22,3 +22,70 @@
 .imgfillspace {
 	width: 100%;
 }
+
+// The Steps
+.thesteps {
+	text-align: center;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    padding: 15px 0;
+    background: #1288D2;
+    margin-bottom: 0px;
+    li {
+        display: inline-block;
+        padding: 10px 15px;
+        margin: 0 10px;
+        background: #fff;
+        border-radius: 20px;
+    }
+    .comped {
+        background: #2faee2;
+        color: #fff;
+    }
+	.todo-step {
+		background: #10499B;
+		color: #fff;
+	}
+}
+.squarelist {
+	list-style-type: none;
+	font-size: 18px;
+	padding-left: 25px;
+	li {
+		margin: 10px 0;
+	}
+}
+
+// Stripe Checkout
+.stripe-button-el {
+    span {
+        padding: 12px 22px !important;
+        height: 56px !important;
+    }
+}
+.centerbtn {
+	display: block;
+	margin: 0 auto;
+}
+
+// Iframe mobile fixes
+.modal-body {
+	-webkit-overflow-scrolling: auto !important;
+	overflow-y: auto !important;
+}
+.modal-dialog {
+	height: 100%;
+}
+.modal-content {
+	height: 100%;
+}
+
+// Responsive stuff
+// ================
+// Medium devices (desktops, 992px and up)
+@media (min-width: 992px) { 
+	.betaller {
+		min-height: 800px;
+	}
+}
+// end Medium devices

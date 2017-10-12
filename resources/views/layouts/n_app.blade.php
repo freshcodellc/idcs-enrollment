@@ -59,14 +59,14 @@
               @guest
                   <li><a class="btn u-btn-outline-primary g-font-size-13 text-uppercase g-py-10 g-px-15" href="{{ route('login') }}">Login</a></li>
               @else
-                  <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                          {{ Auth::user()->first_name }} {{ Auth::user()->last_name }} <span class="caret"></span>
+                  <li class="nav-item dropdown">
+                      <a href="#" class="nav-link dropdown-toggle btn u-btn-outline-primary g-font-size-13 text-uppercase g-py-10 g-px-15" data-toggle="dropdown" role="button"  aria-haspopup="true" aria-expanded="false">
+                          {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}
                       </a>
 
-                      <ul class="dropdown-menu" role="menu">
+                      <ul class="dropdown-menu">
                           <li>
-                              <a href="{{ route('logout') }}"
+                              <a class="dropdown-item" href="{{ route('logout') }}"
                                   onclick="event.preventDefault();
                                            document.getElementById('logout-form').submit();">
                                   Logout
@@ -87,33 +87,32 @@
     <!-- End Header -->
 
     <div class="container">
-            <div class="row">
+      <div class="row">
 
-                @if (isset($success) && !empty($success))
-                <div class="col-md-8 col-md-offset-2 alert alert-success" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    {{ $success }}
-                </div>
-                @endif
+          @if (isset($success) && !empty($success))
+          <div class="col-md-8 col-md-offset-2 alert alert-success" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+              {{ $success }}
+          </div>
+          @endif
 
-                @if (isset($errors) && !empty($errors))
-                @foreach ($errors as $error)
-                <div class="col-md-8 col-md-offset-2 alert alert-danger" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    {{ $error }}
-                </div>
-                @endforeach
-                @endif
+          @if (isset($errors) && !empty($errors))
+          @foreach ($errors as $error)
+          <div class="col-md-8 col-md-offset-2 alert alert-danger" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+              {{ $error }}
+          </div>
+          @endforeach
+          @endif
 
-            </div>
-        </div>
-
-        @yield('content')
+      </div>
     </div>
+
+    @yield('content')
 
     <!-- Footer -->
     <div id="contacts-section" class="g-bg-black-opacity-0_9 g-color-white-opacity-0_8 g-py-60">

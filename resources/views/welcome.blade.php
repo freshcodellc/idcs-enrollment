@@ -218,7 +218,7 @@
             <div class="u-heading-v2-3--bottom g-brd-primary g-mb-30">
               <h2 class="h4 u-heading-v2__title g-color-gray-dark-v2 g-font-weight-600 text-uppercase">Your Latest Credit Score</h2>
             </div>
-            <p class="g-font-size-16 g-line-height-2 g-mb-30">Our goal is helping you make wise credit decisions by giving you quick and simple access to your credit reports and scores. Online signup in just minutes, with a FREE 7 day trial and easy online cancellation.</p>
+            <p class="g-font-size-16 g-line-height-2 g-mb-30">Our goal is helping you make wise credit decisions by giving you quick and simple access to your credit reports and scores. Online signup in just minutes, with a $1 seven day trial and easy online cancellation.</p>
           </div>
           <!-- End Section Content -->
         </div>
