@@ -252,17 +252,18 @@
 
   <!-- JS Unify -->
   <script src="{{ asset('n_js/hs.core.js') }}"></script>
-  <script src="{{ asset('n_js/components/hs.header.js') }}"></script>
+  <!-- <script src="{{ asset('n_js/components/hs.header.js') }}"></script> -->
   <!-- <script src="{{ asset('n_js/helpers/hs.hamburgers.js') }}"></script> -->
-  <script src="{{ asset('n_js/components/hs.tabs.js') }}"></script>
-  <script src="{{ asset('n_js/components/hs.popup.js') }}"></script>
+  <!-- <script src="{{ asset('n_js/components/hs.tabs.js') }}"></script> -->
+  <!-- <script src="{{ asset('n_js/components/hs.popup.js') }}"></script> -->
   <!-- <script src="../../n_js/components/hs.carousel.js"></script> -->
   <script src="{{ asset('n_js/components/text-animation/hs.text-slideshow.js') }}"></script>
-  <script src="{{ asset('n_js/components/hs.go-to.js') }}"></script>
+  <!-- <script src="{{ asset('n_js/components/hs.go-to.js') }}"></script> -->
 
-  <!-- JS Customization -->
-  <!-- <script src="../../n_js/custom.js"></script> -->
 
+  <!-- Laravel Scripts -->
+  <script src="{{ asset('js/app.js') }}"></script>
+  
   <!-- JS Plugins Init. -->
   <script>
     $(document).on('ready', function () {
@@ -270,13 +271,13 @@
         // $.HSCore.components.HSCarousel.init('.js-carousel');
 
         // initialization of tabs
-        $.HSCore.components.HSTabs.init('[role="tablist"]');
+        // $.HSCore.components.HSTabs.init('[role="tablist"]');
 
         // initialization of popups
-        $.HSCore.components.HSPopup.init('.js-fancybox');
+        // $.HSCore.components.HSPopup.init('.js-fancybox');
 
         // initialization of go to
-        $.HSCore.components.HSGoTo.init('.js-go-to');
+        // $.HSCore.components.HSGoTo.init('.js-go-to');
 
         // initialization of text animation (typing)
         $(".u-text-animation.u-text-animation--typing").typed({
@@ -291,9 +292,9 @@
         });
       });
 
-      $(window).on('load', function () {
+      // $(window).on('load', function () {
         // initialization of header
-        $.HSCore.components.HSHeader.init($('#js-header'));
+        // $.HSCore.components.HSHeader.init($('#js-header'));
         // $.HSCore.helpers.HSHamburgers.init('.hamburger');
 
         // initialization of HSMegaMenu component
@@ -302,16 +303,22 @@
         //   pageContainer: $('.container'),
         //   breakpoint: 991
         // });
-      });
+      // });
 
-      $(window).on('resize', function () {
-        setTimeout(function () {
-          $.HSCore.components.HSTabs.init('[role="tablist"]');
-        }, 200);
-      });
   </script>
 
 
+
+    <script>
+        window.closeCreditReportModal = function() {
+            $('#creditReportModal').modal('hide');
+        };
+
+        jQuery(document).ready(function() {
+            @yield('viewJquery')
+        });
+    </script>
+    @yield('moreJS')
 </body>
 
 </html>
