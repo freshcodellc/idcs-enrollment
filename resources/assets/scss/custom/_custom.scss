@@ -1,0 +1,114 @@
+/* SYS custom styles */
+.thelogin {
+	li {
+		list-style: none;
+	}
+}
+.banner-text {
+	// text-shadow: 1px 1px 3px #ccc;
+}
+.startform {
+	.col-md-12 {
+		padding-left: 0;
+	}
+}
+.solid-bg-icon {
+	padding-top: 10px;
+}
+.startbtn {
+	margin-top: 20px;
+}
+
+.imgfillspace {
+	width: 100%;
+}
+
+// The Steps
+.thesteps {
+	text-align: center;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    padding: 15px 0;
+    background: #1288D2;
+    margin-bottom: 0px;
+    li {
+        display: inline-block;
+        padding: 10px 15px;
+        margin: 0 10px;
+        background: #fff;
+        border-radius: 20px;
+    }
+    .comped {
+        background: #2faee2;
+        color: #fff;
+    }
+	.todo-step {
+		background: #10499B;
+		color: #fff;
+	}
+}
+.squarelist {
+	list-style-type: none;
+	font-size: 18px;
+	padding-left: 25px;
+	li {
+		margin: 10px 0;
+	}
+}
+
+// Stripe Checkout
+.stripe-button-el {
+    span {
+        padding: 12px 22px !important;
+        height: 56px !important;
+    }
+}
+.centerbtn {
+	display: block;
+	margin: 0 auto;
+}
+
+// Iframe mobile fixes
+// .modal-body {
+// 	-webkit-overflow-scrolling: auto !important;
+// 	overflow-y: auto !important;
+// }
+.modal-dialog {
+	height: 100%;
+}
+.modal-content {
+	height: 80%;
+	padding: 20px 5px 20px 20px;
+}
+.norel {
+	position: static;
+}
+.close {
+	width: 15px;
+	height: 15px;
+	position: absolute;
+    top: 1px;
+    right: 5px;
+}
+
+.dropdown-menu {
+	min-width: 9rem !important;
+}
+
+// Responsive stuff
+// ================
+// Medium devices (desktops, 992px and up)
+@media (min-width: 992px) { 
+	.betaller {
+		min-height: 800px;
+	}
+}
+// end Medium devices
+
+// Small stuff
+@media (max-width: 768px) {
+	.thelogin {
+		float: right;
+		margin-right: 40px;
+	}
+}
