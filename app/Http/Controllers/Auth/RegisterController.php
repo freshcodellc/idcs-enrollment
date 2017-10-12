@@ -59,6 +59,7 @@ class RegisterController extends Controller
             'state' => 'required|string|max:50',
             'zip' => 'required|string|max:15',
             'phone' => 'required|string|max:30',
+            'eventcode' => 'nullable|string|max:30'
         ]);
     }
 
@@ -81,6 +82,7 @@ class RegisterController extends Controller
             'state' => $data['state'],
             'zip' => $data['zip'],
             'phone' => $data['phone'],
+            'eventcode' =>$data['eventcode'],
             'uuid' => Uuid::uuid4()->toString(),
         ]);
     }

@@ -217,6 +217,18 @@
                         </div>                
                     </div>
                     <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="event-code" class="col-md-4 control-label">Event Code</label>
+
+                            <div class="col-md-8">
+                                <input id="event-code" type="text" class="form-control" name="eventcode" null>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="password" class="col-md-4 control-label">Password</label>
 
@@ -231,14 +243,11 @@
                             </div>
                         </div>                
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-8 col-md-push-4">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <label for="password-confirm" class="col-md-6 control-label">Confirm Password</label>
+                            <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
 
-                            <div class="col-md-6">
+                            <div class="col-md-8">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                             </div>
                         </div>                                    
