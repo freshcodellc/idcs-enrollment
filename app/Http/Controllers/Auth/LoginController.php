@@ -53,4 +53,14 @@ class LoginController extends Controller
                 return '/home';
         }
     }
+
+    /**
+     * Override the username method used to validate login
+     *
+     * @return string
+     */
+    public function username()
+    {
+        return 'username';
+    }
 }
