@@ -28,6 +28,6 @@ Route::get('/home/kba', 'KbaController@index')->name('kba');
 Route::group(['middleware' => 'can:accessAdminDashboard'], function() {
     Route::get('admin', 'Admin\AdminController@index');
     Route::resource('admin/users', 'Admin\UsersController');
-    Route::resource('admin/charges', 'Admin\ChargesController');
-    Route::resource('admin/subscriptions', 'Admin\SubscriptionsController');
+    //Route::resource('admin/charges', 'Admin\ChargesController');
+    //Route::resource('admin/subscriptions', 'Admin\SubscriptionsController');
 });
