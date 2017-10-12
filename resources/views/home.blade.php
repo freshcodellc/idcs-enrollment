@@ -62,25 +62,27 @@
 
         @if ($credit_url->url && $credit_url->charge_id > 0 && $stripe_customer->subscription_id)
 
-        @if (empty($stripe_customer->cancelled_at))
-        <form method="POST" action="{{ route('cancel') }}" style="display: inline;">
-            {{ csrf_field() }}
-            <button type="submit" class="btn btn-link" style="color: #8B0000">
-                Cancel Subscription
-            </button>
-        </form>
-        @endif
-
-        <button type="button"
-                class="btn btn-primary btn-lg"
-                data-toggle="modal"
-                data-target="#creditReportModal">
-            @if (!$credit_url->kba_result)
-            Verify Identity
-            @else
-            View Credit Report
+            @if (empty($stripe_customer->cancelled_at))
+            <form method="POST" action="{{ route('cancel') }}" style="display: inline;">
+                {{ csrf_field() }}
+                <button type="submit" class="btn btn-link" style="color: #8B0000">
+                    Cancel Subscription
+                </button>
+            </form>
             @endif
-        </button>
+
+            @if (empty($credit_url->cancelled_at))
+            <button type="button"
+                    class="btn btn-primary btn-lg"
+                    data-toggle="modal"
+                    data-target="#creditReportModal">
+                @if (!$credit_url->kba_result)
+                Verify Identity
+                @else
+                View Credit Report
+                @endif
+            </button>
+            @endif
         @endif
 
     </div>
