@@ -64,6 +64,10 @@
                                 </tr>
                             </table>
                         </div>
+
+                        <div class="text-center">
+                            <a class="btn btn-primary" href="{{ $user->credit_url->url }}" target="_blank">View Credit Report</a>
+                        </div>
                     </div>
                 </div>
             </div>

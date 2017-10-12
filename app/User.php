@@ -38,4 +38,12 @@ class User extends Authenticatable
         $role = (array)$role;
         return in_array($this->role, $role);
     }
+
+    /**
+     * Get the phone record associated with the user.
+     */
+    public function credit_url()
+    {
+        return $this->hasOne('App\CreditUrl');
+    }
 }

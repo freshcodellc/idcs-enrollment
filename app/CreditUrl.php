@@ -50,4 +50,12 @@ class CreditUrl extends Model
 
         return $personalized_url;
     }
+
+    /**
+     * Get the user that owns the phone.
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }
