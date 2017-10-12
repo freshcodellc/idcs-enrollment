@@ -7,6 +7,7 @@ use App\Charge;
 use App\CreditUrl;
 use App\StripeCustomer;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -53,6 +54,10 @@ class HomeController extends Controller
         }
 
         $stripe_key = env('APP_ENV') == "local" ? env('STRIPE_KEY_TEST_PUBLISHABLE') : env('STRIPE_KEY_PUBLISHABLE');
+
+        if ($request->input['error']) {
+            $this->errors[] = $request->input['error'];
+        }
 
         return view('home', [
             'stripe_key' => $stripe_key,
@@ -194,7 +199,7 @@ class HomeController extends Controller
         $stripe_secret_key = env('APP_ENV') == "local" ? env('STRIPE_KEY_TEST_SECRET') : env('STRIPE_KEY_SECRET');
 
         \Stripe\Stripe::setApiKey($stripe_secret_key);
-        
+
         // subscribe user to $29 per month plan with a 7 day grace period (free trial)
         try {
             $subscription = \Stripe\Subscription::create(array(
@@ -231,6 +236,55 @@ class HomeController extends Controller
             $this->stripe_customer->subscription_id = $subscription->id;
             $this->stripe_customer->save();
         }
+    }
+
+    /**
+     * Cancel Stripe Subscription and IDCS enrollment for user
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    protected function cancel(Request $request)
+    {
+        // cancel IDCS enrollment, if necessary
+        $this->credit_url = CreditUrl::where('user_id', Auth::user()->id)->first();
+        if (empty($this->credit_url->cancelled_at)) {
+            $idcs_api = new IdcsApi(Auth::user());
+            $cancel_response = $idcs_api->cancel();
+
+            if ($cancel_response) {
+                // mark credit url as cancelled
+                $this->credit_url->cancelled_at = Carbon::now()->toDateTimeString();
+                $this->credit_url->save();
+            }
+        } else {
+            $cancel_response = true; // enrollment already cancelled
+        }
+
+        // only cancel Stripe if the enrollment has been cancelled
+        if ($cancel_response) {
+            // cancel Stripe, if necessary
+            $this->stripe_customer = StripeCustomer::where('user_id', Auth::user()->id)->first();
+            if (!empty($this->stripe_customer->subscription_id) && empty($this->stripe_customer->cancelled_at)) {
+                $stripe_secret_key = env('APP_ENV') == "local" ? env('STRIPE_KEY_TEST_SECRET') : env('STRIPE_KEY_SECRET');
+                \Stripe\Stripe::setApiKey($stripe_secret_key);
+
+                $subscription = \Stripe\Subscription::retrieve($this->stripe_customer->subscription_id);
+                $subscription->cancel();
+
+                $this->stripe_customer->cancelled_at = Carbon::now()->toDateTimeString();
+                $this->stripe_customer->save();
+
+                $get_params['success'] = "Success! Enrollment cancelled.";
+            } else {
+                $get_params['success'] = "Enrollment already cancelled.";
+            }
+        } else {
+            $get_params['error'] = "Error: Unable to cancel subscription.";
+        }
+
+        // redirect back home
+        return redirect()->route('home', $get_params);
     }
 
 }

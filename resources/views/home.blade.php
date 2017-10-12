@@ -25,7 +25,7 @@
                         </tr>
                         <tr>
                             <td class="text-right">Enrolled</td>
-                            <td>@if ($credit_url->url) <span class="text-success">Yes</span> @else <span class="text-danger">No</span> @endif</td>
+                            <td>@if ($credit_url->url && empty($credit_url->cancelled_at)) <span class="text-success">Yes</span> @else <span class="text-danger">No</span> @endif</td>
                         </tr>
                         <tr>
                             <td class="text-right">Payment Status</td>
@@ -61,6 +61,16 @@
         @endif
 
         @if ($credit_url->url && $credit_url->charge_id > 0 && $stripe_customer->subscription_id)
+
+        @if (empty($stripe_customer->cancelled_at))
+        <form method="POST" action="{{ route('cancel') }}" style="display: inline;">
+            {{ csrf_field() }}
+            <button type="submit" class="btn btn-link" style="color: #8B0000">
+                Cancel Subscription
+            </button>
+        </form>
+        @endif
+
         <button type="button"
                 class="btn btn-primary btn-lg"
                 data-toggle="modal"
