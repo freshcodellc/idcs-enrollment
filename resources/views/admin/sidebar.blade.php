@@ -1,4 +1,4 @@
-<div class="list-group" style="margin-top: 70px;">
+<div class="list-group" style="margin-top: 65px;">
     <a class="list-group-item {{ Request::is('admin') ? ' active' : '' }}" href="{{ url('admin') }}">
         <i class="fa fa-home fa-fw" aria-hidden="true"></i>&nbsp; Dashboard
     </a>

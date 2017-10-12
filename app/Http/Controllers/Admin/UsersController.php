@@ -3,15 +3,22 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Role;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Ramsey\Uuid\Uuid;
 use Session;
 
 class UsersController extends Controller
 {
+    private $roles = [
+        'client' => 'Client',
+        'admin' => 'Admin',
+        'superadmin' => 'Super Administrator',
+    ];
+
     /**
-     * Display a listing of the resource.
+     * Display Users
      *
      * @return void
      */
@@ -21,7 +28,8 @@ class UsersController extends Controller
         $perPage = 15;
 
         if (!empty($keyword)) {
-            $users = User::where('name', 'LIKE', "%$keyword%")->orWhere('email', 'LIKE', "%$keyword%")
+            $users = User::where('first_name', 'LIKE', "%$keyword%")->orWhere('email', 'LIKE', "%$keyword%")
+                ->orWhere('last_name', 'LIKE', "%$keyword%")
                 ->paginate($perPage);
         } else {
             $users = User::paginate($perPage);
@@ -31,20 +39,17 @@ class UsersController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a User
      *
      * @return void
      */
     public function create()
     {
-        $roles = Role::select('id', 'name', 'label')->get();
-        $roles = $roles->pluck('label', 'name');
-
-        return view('admin.users.create', compact('roles'));
+        return view('admin.users.create', ['roles' => $this->roles]);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created User
      *
      * @param  \Illuminate\Http\Request $request
      *
@@ -52,15 +57,22 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['name' => 'required', 'email' => 'required', 'password' => 'required', 'roles' => 'required']);
+        $this->validate($request, [
+            'first_name' => 'required|string|max:50',
+            'last_name' => 'required|string|max:50',
+            'email' => 'required|string|email|max:191|unique:users',
+            'password' => 'required|string|min:6',
+            'address' => 'required|string|max:191',
+            'city' => 'required|string|max:100',
+            'state' => 'required|string|max:50',
+            'zip' => 'required|string|max:15',
+            'phone' => 'required|string|max:30',
+        ]);
 
         $data = $request->except('password');
         $data['password'] = bcrypt($request->password);
+        $data['uuid'] = Uuid::uuid4()->toString();
         $user = User::create($data);
-
-        foreach ($request->roles as $role) {
-            $user->assignRole($role);
-        }
 
         Session::flash('flash_message', 'User added!');
 
@@ -68,9 +80,9 @@ class UsersController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the User
      *
-     * @param  int  $id
+     * @param int $id User ID
      *
      * @return void
      */
@@ -82,37 +94,41 @@ class UsersController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the User
      *
-     * @param  int  $id
+     * @param int $id User ID
      *
      * @return void
      */
     public function edit($id)
     {
-        $roles = Role::select('id', 'name', 'label')->get();
-        $roles = $roles->pluck('label', 'name');
+        $user = User::findOrFail($id);
+        $roles = $this->roles;
 
-        $user = User::with('roles')->select('id', 'name', 'email')->findOrFail($id);
-        $user_roles = [];
-        foreach ($user->roles as $role) {
-            $user_roles[] = $role->name;
-        }
-
-        return view('admin.users.edit', compact('user', 'roles', 'user_roles'));
+        return view('admin.users.edit', compact('user', 'roles'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update User
      *
-     * @param  int      $id
-     * @param  \Illuminate\Http\Request  $request
+     * @param int $id User ID
+     * @param \Illuminate\Http\Request $request
      *
      * @return void
      */
     public function update($id, Request $request)
     {
-        $this->validate($request, ['name' => 'required', 'email' => 'required', 'roles' => 'required']);
+        $this->validate($request, [
+            'first_name' => 'required|string|max:50',
+            'last_name' => 'required|string|max:50',
+            'email' => 'required|string|email|max:191|unique:users',
+            'password' => 'required|string|min:6',
+            'address' => 'required|string|max:191',
+            'city' => 'required|string|max:100',
+            'state' => 'required|string|max:50',
+            'zip' => 'required|string|max:15',
+            'phone' => 'required|string|max:30',
+        ]);
 
         $data = $request->except('password');
         if ($request->has('password')) {
@@ -122,20 +138,15 @@ class UsersController extends Controller
         $user = User::findOrFail($id);
         $user->update($data);
 
-        $user->roles()->detach();
-        foreach ($request->roles as $role) {
-            $user->assignRole($role);
-        }
-
         Session::flash('flash_message', 'User updated!');
 
         return redirect('admin/users');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove User
      *
-     * @param  int  $id
+     * @param int $id User ID
      *
      * @return void
      */
