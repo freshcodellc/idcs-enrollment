@@ -11,5 +11,5 @@ class StripeCustomer extends Model
      *
      * @var array
      */
-    protected $fillable = ['user_id', 'stripe_customer_id', 'stripe_email', 'subscription_id'];
+    protected $fillable = ['user_id', 'stripe_customer_id', 'stripe_email', 'subscription_id', 'cancelled_at'];
 }
