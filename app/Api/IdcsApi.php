@@ -18,13 +18,57 @@ class IdcsApi
     private $saveExistingUrl = false;
 
     private $endpoints = [
-        "enroll" => "http://xml.idcreditservices.com/IDSWebServicesNG/IDSEnrollment.asmx?WSDL",
+        "cancel" => "https://xml.idcreditservices.com/PartnerWebServices/UpdateStatusRequest.asmx?WSDL",
+        "enroll" => "https://xml.idcreditservices.com/IDSWebServicesNG/IDSEnrollment.asmx?WSDL",
         "getCreditUrl" => "https://xml.idcreditservices.com/SIDUpdateServices/MemberUpdate.asmx?WSDL"
     ];
 
     public function __construct(Authenticatable $user)
     {
         $this->user = $user;
+    }
+
+    public function cancel() {
+        $client = new \SoapClient($this->endpoints['cancel'], array(
+            'trace' => true,
+            'cache_wsdl' => WSDL_CACHE_NONE,
+            //'soap_version' => SOAP_1_2,
+            //'use' => SOAP_LITERAL
+            //'features' => SOAP_SINGLE_ELEMENT_ARRAYS
+        ));
+
+        $xml = '<MPIUpdateStatusRequest xmlns="request.reactiveuser.xml.mpi" xmlns:ac="addresstype.common.xml.mpi" xmlns:cm="common.xml.mpi" xmlns:ct="customerinfotype.common.xml.mpi" xmlns:ec="emailtype.common.xml.mpi" xmlns:n1="mpi.xml.common.addresstype" xmlns:nt="nametype.common.xml.mpi" xmlns:pt="partnerinfotype.common.xml.mpi" xmlns:ns1="phonetype.common.xml.mpi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="request.reactiveuser.xml.mpi">';
+        $xml .= '<GUID>' . uniqid() . '</GUID>';
+        $xml .= '<Transaction>Cancel</Transaction>';
+        $xml .= '<CustomerId>' . $this->user->uuid . '</CustomerId>';
+        $xml .= '<PartnerAccountInfo>';
+        $xml .= '<pt:PartnerName>' . env('IDCS_USERNAME') . '</pt:PartnerName>';
+        $xml .= '<pt:PartnerAccount>' . env('IDCS_USERNAME') . '</pt:PartnerAccount>';
+        $xml .= '<pt:PartnerPassword>' . env('IDCS_PASSWORD') . '</pt:PartnerPassword>';
+        $xml .= '<pt:ServerDate>' . gmdate("Y-m-d\TH:i:s\Z") . '</pt:ServerDate>';
+        $xml .= '</PartnerAccountInfo>';
+        $xml .= '</MPIUpdateStatusRequest>';
+
+        try {
+            $parameters = new \stdClass();
+            $parameters->customerStatusInformation = $xml;
+
+            $response_soap = $client->UpdateCustomerStatus($parameters);
+
+            $result = (array) $response_soap;
+            $status_sf = $result["UpdateCustomerStatusResult"];
+
+            if (stristr($status_sf, "SUCCESS")) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (\Exception $e) {
+            $msg = $e->getMessage() . " on user with ID #" . $this->user->id;
+            Log::error($msg);
+
+            return false;
+        }
     }
 
     /**
