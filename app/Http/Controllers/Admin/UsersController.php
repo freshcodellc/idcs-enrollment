@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Api\IdcsApi;
 use App\Http\Controllers\Controller;
+use App\StripeCustomer;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Uuid;
@@ -157,5 +160,63 @@ class UsersController extends Controller
         Session::flash('flash_message', 'User deleted!');
 
         return redirect('admin/users');
+    }
+
+    /**
+     * Cancel Stripe Subscription and IDCS enrollment for user
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    protected function cancelUser(Request $request)
+    {
+        //dd($request->cancel_user_id);
+        $user_id = (int) $request->cancel_user_id;
+
+        // cancel IDCS enrollment, if necessary
+        $user = User::findOrFail($user_id);
+        //dd($user->credit_url->cancelled_at);
+
+        //$credit_url = CreditUrl::where('user_id', $user_id)->first();
+        if (empty($user->credit_url->cancelled_at)) {
+            $idcs_api = new IdcsApi($user);
+            $cancel_response = $idcs_api->cancel();
+
+            if ($cancel_response) {
+                // mark credit url as cancelled
+                $user->credit_url->cancelled_at = Carbon::now()->toDateTimeString();
+                $user->credit_url->save();
+            }
+        } else {
+            $cancel_response = true; // enrollment already cancelled
+        }
+
+        // only cancel Stripe if the enrollment has been cancelled
+        if ($cancel_response) {
+            // cancel Stripe, if necessary
+            $stripe_customer = StripeCustomer::where('user_id', $user_id)->first();
+            if (!empty($stripe_customer->subscription_id) && empty($stripe_customer->cancelled_at)) {
+                $stripe_secret_key = env('APP_ENV') == "local" ? env('STRIPE_KEY_TEST_SECRET') : env('STRIPE_KEY_SECRET');
+                \Stripe\Stripe::setApiKey($stripe_secret_key);
+
+                $subscription = \Stripe\Subscription::retrieve($stripe_customer->subscription_id);
+                $subscription->cancel();
+
+                $stripe_customer->cancelled_at = Carbon::now()->toDateTimeString();
+                $stripe_customer->save();
+
+                $message['message'] = "Success! User's enrollment cancelled.";
+                $message['type'] = 'flash_message';
+            } else {
+                $message['message'] = "User's enrollment already cancelled.";
+                $message['type'] = 'flash_message';
+            }
+        } else {
+            $message['message'] = "Error: Unable to cancel user's subscription.";
+            $message['type'] = 'error';
+        }
+
+        // redirect back home
+        return redirect("admin/users/{$user_id}")->with($message['type'], $message['message']);
     }
 }

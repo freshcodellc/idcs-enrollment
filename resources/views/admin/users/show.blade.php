@@ -62,10 +62,31 @@
                                     <td class="text-right">Zip Code</td>
                                     <td>{{ $user->zip }}</td>
                                 </tr>
+                                <tr>
+                                    <td class="text-right">Subscription Status</td>
+                                    <td>
+                                        @if (empty($user->credit_url->cancelled_at))
+                                        <span class="text-success">Active</span>
+                                        @else
+                                        <span class="text-danger">Cancelled ({{$user->credit_url->cancelled_at}})</span>
+                                        @endif
+                                    </td>
+                                </tr>
                             </table>
                         </div>
 
                         <div class="text-center">
+
+                            @if (empty($user->credit_url->cancelled_at))
+                            <form method="POST" action="{{ route('cancel_user') }}" style="display: inline;">
+                                {{ csrf_field() }}
+                                <input type="hidden" id="cancel_user_id" name="cancel_user_id" value="{{ $user->id }}" />
+                                <button type="submit" class="btn btn-link centerbtn g-mt-50" style="color: #8B0000"
+                                        onclick="return confirm('Are you sure you want to cancel this user\'s subscription?');">
+                                    Cancel Subscription
+                                </button>
+                            </form>
+                            @endif
                             <a class="btn btn-primary" href="{{ $user->credit_url->url }}" target="_blank">View Credit Report</a>
                         </div>
                     </div>
