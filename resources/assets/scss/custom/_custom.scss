@@ -19,9 +19,6 @@
 	margin-top: 20px;
 }
 
-.imgfillspace {
-	width: 100%;
-}
 
 // The Steps
 .thesteps {
@@ -108,7 +105,10 @@
 // Small stuff
 @media (max-width: 768px) {
 	.thelogin {
-		float: right;
-		margin-right: 40px;
+		margin: 15px 0 0;
+		padding-left: 0;
+	}
+	.imgfillspace {
+		display: none;
 	}
 }

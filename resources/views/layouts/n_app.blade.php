@@ -50,11 +50,11 @@
 
             <!-- Logo -->
             <a href="/" class="navbar-brand">
-              <img src="{{ asset('i/logo.jpg') }}" alt="See Your Score Logo">
+              <img class="img-fluid" src="{{ asset('i/logo.jpg') }}" alt="See Your Score Logo">
             </a>
             <img class="bureau" src="{{ asset('i/bureaus.png') }}" alt="">           
 
-            <div class="d-inline-block g-pos-rel g-valign-middle g-pl-30 g-pl-0--lg thelogin">
+            <ul class="thelogin">
               <!-- Authentication Links -->
               @guest
                   <li><a class="btn u-btn-outline-primary g-font-size-13 text-uppercase g-py-10 g-px-15" href="{{ route('login') }}">Login</a></li>
@@ -79,7 +79,7 @@
                       </ul>
                   </li>
               @endguest
-            </div>
+            </ul>
           </div>
         </nav>
       </div>
@@ -280,7 +280,7 @@
         // $.HSCore.components.HSGoTo.init('.js-go-to');
 
         // initialization of text animation (typing)
-        $(".u-text-animation.u-text-animation--typing").typed({
+        $(".u-text-animation--typing").typed({
           strings: [
             "Easy registration",
             "Reports in minutes",

@@ -187,7 +187,7 @@
     <section class="g-bg-secondary g-py-100">
       <div class="container">
         <div class="row">
-          <div class="col-lg-6 align-self-center g-mb-100 g-mb-0--lg">
+          <div class="col-lg-6 align-self-center">
             <header class="u-heading-v2-3--bottom g-brd-primary g-mb-20">
               <h2 class="h4 u-heading-v2__title g-color-gray-dark-v2 g-font-weight-600 text-uppercase">Why Check Your Credit?</h2>
             </header>
@@ -195,7 +195,7 @@
             <p class="g-font-size-16 g-mb-30">Your credit report unlocks the door to personal and business opportunities. Knowing your credit score is essential, whether you’re looking for good interest rates on mortgages, cars, or credit card offers; applying for a job; or trying to secure business funding. Regularly monitoring your credit keeps you informed of potential errors or red flags affecting your score, allows you to know exactly what you qualify for when applying for loans or lines of credit, and brings any signs of identity theft or credit fraud to your attention. </p>
           </div>
 
-          <div class="col-lg-6 g-bg-img-hero g-pos-rel imgfillspace" style="background-image: url('{{ asset('i/text-bg.png') }}');">
+          <div class="col-lg-6 g-bg-img-hero g-pos-rel u-text-animation imgfillspace" style="background-image: url('{{ asset('i/text-bg.png') }}');">
             <div class="g-absolute-centered text-center w-100 g-px-40">
               <h2 class="h1 g-font-weight-600 g-letter-spacing-0_5">
                   <span class="u-text-animation u-text-animation--typing"></span></h2>

@@ -11,9 +11,6 @@
 .startbtn {
   margin-top: 20px; }
 
-.imgfillspace {
-  width: 100%; }
-
 .thesteps {
   text-align: center;
   border-top-right-radius: 4px;
@@ -75,5 +72,7 @@
 
 @media (max-width: 768px) {
   .thelogin {
-    float: right;
-    margin-right: 40px; } }
+    margin: 15px 0 0;
+    padding-left: 0; }
+  .imgfillspace {
+    display: none; } }
