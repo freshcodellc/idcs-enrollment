@@ -68,14 +68,15 @@
                     </button>
                     @endif
 
-                    @if (empty($stripe_customer->cancelled_at))
+{{-- Don't show ability to cancel to the user - Uncomment to allow them to cancel their own subscription --}}
+{{--                     @if (empty($stripe_customer->cancelled_at))
                     <form method="POST" action="{{ route('cancel') }}" style="display: inline;">
                         {{ csrf_field() }}
                         <button type="submit" class="btn btn-link centerbtn g-mt-50" style="color: #8B0000">
                             Cancel Subscription
                         </button>
                     </form>
-                    @endif                    
+                    @endif    --}}                 
                 @endif 
                 </div>
             </div>

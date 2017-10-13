@@ -280,7 +280,7 @@
         // $.HSCore.components.HSGoTo.init('.js-go-to');
 
         // initialization of text animation (typing)
-        $(".u-text-animation--typing").typed({
+        $(".u-text-animation.u-text-animation--typing").typed({
           strings: [
             "Easy registration",
             "Reports in minutes",
