@@ -175,7 +175,6 @@
                         <div class="form-group{{ $errors->has('zip') ? ' has-error' : '' }}">
                             <label for="zip" class="control-label">Zip Code</label>
 
-                            <div class="col-md-12">
                                 <input id="zip" type="text" class="form-control" name="zip" value="{{ old('zip') }}" required>
 
                                 @if ($errors->has('zip'))
@@ -183,7 +182,6 @@
                                         <strong>{{ $errors->first('zip') }}</strong>
                                     </span>
                                 @endif
-                            </div>
                         </div>                
                     </div>
                 </div>
@@ -220,12 +218,51 @@
 
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="form-group">
+                        <div class="form-group" id="invite-code">
                             <label for="event-code" class="control-label">Invite Code</label>
-
                             <input id="event-code" type="text" class="form-control" name="eventcode" null>
+                            <span id="error" style="color:red;"></span>
                         </div>
                     </div>
+
+                    <script>
+                    // Test and validate invite code ONLY if on fundwise.seeyourscore.com
+                    if (location.host == "fundwise.seeyourscore.com") {
+                        document.getElementById("invite-code").innerHTML = '<label for="event-code" class="control-label">Invite Code</label><input id="event-code" type="text" class="form-control" name="eventcode" onBlur="inviteCodeError()" onfocus="inviteCodeReset()" null> <span id="error" style="color:red;"></span>'
+                    }
+                    else {
+                        document.getElementById("invite-code").innerHTML = '<label for="event-code" class="control-label">Invite Code</label><input id="event-code" type="text" class="form-control" name="eventcode" null>'
+                    }
+                    var domain = /:\/\/([^\/]+)/.exec(window.location.href)[1];
+
+                    if(domain === "fundwise.seeyourscore.com") {
+                      document.getElementById('event-code').required= true;
+                    };
+                    var inviteCodeReset = function() {
+                        document.getElementById("error").innerHTML = ""
+                    }
+                    var inviteCodeError = function(){
+                      var eventCode = document.getElementById('event-code').value.toLowerCase();
+                      // console.log(eventCode)
+                      // if(eventCode !== "response1"){
+                      //   document.getElementById("error").innerHTML = "That is an incorrect Invite Code!"
+                      // }
+                      switch (true) {
+                        case (eventCode !== "response1") :
+                        case (eventCode !== "response2") :
+                        case (eventCode !== "response3") :
+                        case (eventCode !== "response4") :
+                        case (eventCode !== "response5") :
+                        case (eventCode !== "response6") :
+                        case (eventCode !== "response7") :
+                        case (eventCode !== "response8") :
+                        case (eventCode !== "response9") :
+                        case (eventCode !== "fwc1") :
+                            document.getElementById("error").innerHTML = "Invite Code is Not Valid!"
+                        }
+                    }
+                    </script>
+
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="password-confirm" class="control-label">Confirm Password</label>
