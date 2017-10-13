@@ -239,8 +239,7 @@
                     }
                     var inviteCodeError = function(){
                       var eventCode = document.getElementById('event-code').value.toLowerCase();
-                      console.log(eventCode)
-                      if (eventCode.match("response1|response2|response3|response4|response5|response6|response7|response8|response9|fwc1")) {
+                      if (eventCode.match("response1|response2|response3|response4|response5|response6|response7|response8|response9|response10|response11|response12|fwc1")) {
                       }
                       else
                         document.getElementById("error").innerHTML = "Invite code is not valid."
