@@ -18,6 +18,7 @@ class IdcsApi
     private $saveExistingUrl = false;
 
     private $endpoints = [
+        "AlertCenter" => "https://xml.idcreditservices.com/rest/api/alerts/AlertCenter?type=json",
         "cancel" => "https://xml.idcreditservices.com/PartnerWebServices/UpdateStatusRequest.asmx?WSDL",
         "enroll" => "https://xml.idcreditservices.com/IDSWebServicesNG/IDSEnrollment.asmx?WSDL",
         "getCreditUrl" => "https://xml.idcreditservices.com/SIDUpdateServices/MemberUpdate.asmx?WSDL"
@@ -26,6 +27,29 @@ class IdcsApi
     public function __construct(Authenticatable $user)
     {
         $this->user = $user;
+    }
+
+    public function getAlertCenterReport() {
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('POST', $this->endpoints['AlertCenter'], [
+            'json' => [
+                "memberId" => "BLAH",
+                "partnerAccount" => env('IDCS_USERNAME'),
+                "partnerCode" => env('IDCS_USERNAME'),
+                "partnerPassword" => env('IDCS_PASSWORD')
+            ]
+        ]);
+
+        $result = json_decode($response->getBody()->getContents());
+
+        //dd($result);
+        if ($result->Response->Status == "SUCCESS") {
+            return $result->Response->Report;
+        } else {
+            Log::error("Error getting Alert Center on user id {$this->user->id} -- " . $result->Response->ErrorCode . ": " . $result->Response->ErrorMessage);
+            throw new IdcsApiException($result->Response->ErrorCode . ": " . $result->Response->ErrorMessage);
+        }
     }
 
     public function cancel() {

@@ -21,6 +21,7 @@ Route::post('/home/payment', 'HomeController@payment')->name('charge_payment');
 Route::post('/home/cancel', 'HomeController@cancel')->name('cancel');
 Route::get('/home/enroll', 'HomeController@enroll')->name('enroll');
 Route::get('/home/create-plan', 'HomeController@createSubscriptionPlan')->name('create_sub_plan');
+Route::get('/home/alert-center', 'HomeController@getAlertCenter')->name('alert_center');
 
 Route::get('/home/kba', 'KbaController@index')->name('kba');
 
