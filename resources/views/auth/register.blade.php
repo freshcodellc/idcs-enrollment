@@ -266,9 +266,16 @@
             </form>
             <!-- End Form -->
 
-            <div class="lawyerstuff g-my-30">
+            <div class="lawyerstuff g-my-30" id="fwextra">
                 <p>By clicking "Create Account", you agree to our <a href="/terms">Terms &amp; Conditions</a>, accept our <a href="/privacy">Privacy Policy</a>, and give See Your Score authorization to obtain your credit report and submit your secure order.</p>
             </div>
+            <script>
+                    if (location.host == "fundwise.seeyourscore.com") {
+                        document.getElementById("fwextra").innerHTML = '
+                        <p>By clicking "Create Account", you agree to our <a href="/terms">Terms &amp; Conditions</a>, accept our <a href="/privacy">Privacy Policy</a>, and give See Your Score authorization to obtain your credit report and submit your secure order. <br>By using this Invite code, you authorize your information to be shared with Fundwise Capital and its affiliates.</p>
+                        '
+                    }                
+            </script>
 
               <footer class="text-center">
                 <p class="g-color-gray-dark-v5 mb-0">Already have an account? <a class="g-font-weight-600" href="/login">login</a>
