@@ -28,6 +28,9 @@ Route::get('/home/kba', 'KbaController@index')->name('kba');
   Route::get('terms', function () {
     return view('pages.terms');
   });
+  Route::get('privacy', function () {
+    return view('pages.privacy');
+  });
 
 // Admin Dashboard routes
 Route::group(['middleware' => 'can:accessAdminDashboard'], function() {
