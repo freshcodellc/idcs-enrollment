@@ -186,13 +186,13 @@
               <small class="d-block g-font-size-default g-mr-10 g-mb-10 g-mb-0--md">2017 © SeeYourScore - All Rights Reserved.</small>
               <ul class="u-list-inline">
                 <li class="list-inline-item">
-                  <a class="g-color-white-opacity-0_8 g-color-white--hover" href="#">Privacy Policy</a>
+                  <a class="g-color-white-opacity-0_8 g-color-white--hover" href="/privacy">Privacy Policy</a>
                 </li>
                 <li class="list-inline-item">
                   <span>|</span>
                 </li>
                 <li class="list-inline-item">
-                  <a class="g-color-white-opacity-0_8 g-color-white--hover" href="#">Terms of Use</a>
+                  <a class="g-color-white-opacity-0_8 g-color-white--hover" href="/terms">Terms of Use</a>
                 </li>
               </ul>
             </div>

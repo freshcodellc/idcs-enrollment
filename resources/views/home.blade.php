@@ -51,6 +51,10 @@
                             data-zip-code="true">
                     </script>
                 </form>
+
+                <div class="lawyerstuff g-my-30">
+                    <p>After the 7 day trial period, you will be billed $29.99 for each month of your membership. You may cancel your membership at any time by contacting our support team at 888-876-6610, however you will be billed for the full amount due for that month’s membership, and will not be eligible for a pro-rated refund.</p>
+                </div>
                 @endif
 
                 @if ($credit_url->url && $credit_url->charge_id > 0 && $stripe_customer->subscription_id)
@@ -67,6 +71,7 @@
                         @endif
                     </button>
                     @endif
+
 
 {{-- Don't show ability to cancel to the user - Uncomment to allow them to cancel their own subscription --}}
 {{--                     @if (empty($stripe_customer->cancelled_at))

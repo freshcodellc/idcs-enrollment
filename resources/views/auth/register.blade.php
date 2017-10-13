@@ -264,7 +264,11 @@
                     </div>
                 </div>
             </form>
-              <!-- End Form -->
+            <!-- End Form -->
+
+            <div class="lawyerstuff g-my-30">
+                <p>By clicking "Create Account", you agree to our <a href="/terms">Terms &amp; Conditions</a>, accept our <a href="/privacy">Privacy Policy</a>, and give See Your Score authorization to obtain your credit report and submit your secure order.</p>
+            </div>
 
               <footer class="text-center">
                 <p class="g-color-gray-dark-v5 mb-0">Already have an account? <a class="g-font-weight-600" href="/login">login</a>
