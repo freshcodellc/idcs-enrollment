@@ -26,8 +26,9 @@ Route::get('/home/kba', 'KbaController@index')->name('kba');
 
 // Admin Dashboard routes
 Route::group(['middleware' => 'can:accessAdminDashboard'], function() {
-    Route::get('admin', 'Admin\AdminController@index');
+    Route::get('admin', 'Admin\AdminController@index')->name('dashboard');
     Route::resource('admin/users', 'Admin\UsersController');
+    Route::post('admin/cancel-user', 'Admin\UsersController@cancelUser')->name('cancel_user');
     //Route::resource('admin/charges', 'Admin\ChargesController');
     //Route::resource('admin/subscriptions', 'Admin\SubscriptionsController');
 });
