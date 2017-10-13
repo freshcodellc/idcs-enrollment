@@ -24,6 +24,11 @@ Route::get('/home/create-plan', 'HomeController@createSubscriptionPlan')->name('
 
 Route::get('/home/kba', 'KbaController@index')->name('kba');
 
+// Static Pages
+  Route::get('terms', function () {
+    return view('pages.terms');
+  });
+
 // Admin Dashboard routes
 Route::group(['middleware' => 'can:accessAdminDashboard'], function() {
     Route::get('admin', 'Admin\AdminController@index')->name('dashboard');
