@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Api\IdcsApi;
+use App\Api\IdcsApiException;
 use App\Charge;
 use App\CreditUrl;
 use App\StripeCustomer;
@@ -285,6 +286,16 @@ class HomeController extends Controller
 
         // redirect back home
         return redirect()->route('home', $get_params);
+    }
+
+    protected function getAlertCenter() {
+        try {
+            $idcs_api = new IdcsApi(Auth::user());
+            $response = $idcs_api->getAlertCenterReport();
+            dd($response);
+        } catch (IdcsApiException $e) {
+            dd($e->getMessage());
+        }
     }
 
 }
