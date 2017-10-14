@@ -97,8 +97,8 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
               <div class="modal-body">
-                <div class="embed-responsive norel">
-                    <iframe class="embed-responsive-item" id="creditReportIframe" src="" class="creditReportIframe" name="info" seamless=""></iframe>
+                <div class="themodalcon">
+                    <iframe id="creditReportIframe" src="" class="creditReportIframe" name="info" seamless=""></iframe>
                 </div>
               </div>
             </div>
@@ -120,4 +120,7 @@
     $('#creditReportModal').on('hidden.bs.modal', function () {
         location.reload();
     });
+               $(document).ready(function() {
+                $('#creditReportIframe').contents().find('body').css('overflow', 'auto');
+            });
 @endsection

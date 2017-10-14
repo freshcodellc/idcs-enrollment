@@ -70,22 +70,59 @@
 // 	-webkit-overflow-scrolling: auto !important;
 // 	overflow-y: auto !important;
 // }
-.modal-dialog {
-	height: 100%;
+// .modal-dialog {
+// 	height: 100%;
+// }
+// .modal-content {
+// 	height: 80%;
+// 	padding: 20px 5px 20px 20px;
+// }
+// .norel {
+// 	position: static;
+// }
+.creditReportIframe {
+	width: 100%;
+	border: 0;
+	overflow-x: scroll;
+	min-height: 700px;
 }
-.modal-content {
-	height: 80%;
-	padding: 20px 5px 20px 20px;
+#creditReportModal {
+
 }
-.norel {
-	position: static;
+// don't scroll the background
+body.modal-open {
+    overflow: hidden;
+    position: fixed;
 }
+.themodalcon {
+	// overflow: scroll;
+	// -webkit-overflow-scrolling: touch;
+	width: 100%;
+	min-height: 700px;
+}
+.modal {
+	overflow: scroll;
+	-webkit-overflow-scrolling: touch;
+	.modal-dialog {
+		overflow: scroll;
+		-webkit-overflow-scrolling: touch;
+		.modal-content {
+			overflow: scroll;
+			-webkit-overflow-scrolling: touch;
+			.modal-body {
+				overflow: scroll;
+				-webkit-overflow-scrolling: touch;
+			}
+		}
+	}
+}
+
 .close {
 	width: 15px;
 	height: 15px;
 	position: absolute;
-    top: 1px;
-    right: 5px;
+    top: -4px;
+    right: -2px;
 }
 
 .dropdown-menu {
@@ -110,5 +147,11 @@
 	}
 	.imgfillspace {
 		display: none;
+	}
+	.thesteps {
+		li {
+			display: block;
+			margin: 20px 30px;
+		}
 	}
 }

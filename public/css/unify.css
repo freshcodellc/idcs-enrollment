@@ -18177,22 +18177,39 @@ pre[class*="language-"] {
   display: block;
   margin: 0 auto; }
 
-.modal-dialog {
-  height: 100%; }
+.creditReportIframe {
+  width: 100%;
+  border: 0;
+  overflow-x: scroll;
+  min-height: 700px; }
 
-.modal-content {
-  height: 80%;
-  padding: 20px 5px 20px 20px; }
+body.modal-open {
+  overflow: hidden;
+  position: fixed; }
 
-.norel {
-  position: static; }
+.themodalcon {
+  width: 100%;
+  min-height: 700px; }
+
+.modal {
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch; }
+  .modal .modal-dialog {
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch; }
+    .modal .modal-dialog .modal-content {
+      overflow: scroll;
+      -webkit-overflow-scrolling: touch; }
+      .modal .modal-dialog .modal-content .modal-body {
+        overflow: scroll;
+        -webkit-overflow-scrolling: touch; }
 
 .close {
   width: 15px;
   height: 15px;
   position: absolute;
-  top: 1px;
-  right: 5px; }
+  top: -4px;
+  right: -2px; }
 
 .dropdown-menu {
   min-width: 9rem !important; }
@@ -18206,7 +18223,10 @@ pre[class*="language-"] {
     margin: 15px 0 0;
     padding-left: 0; }
   .imgfillspace {
-    display: none; } }
+    display: none; }
+  .thesteps li {
+    display: block;
+    margin: 20px 30px; } }
 
 /*------------------------------------
   Globals
