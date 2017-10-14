@@ -34,7 +34,7 @@ class IdcsApi
 
         $response = $client->request('POST', $this->endpoints['AlertCenter'], [
             'json' => [
-                "memberId" => "BLAH",
+                "memberId" => $this->user->uuid,
                 "partnerAccount" => env('IDCS_USERNAME'),
                 "partnerCode" => env('IDCS_USERNAME'),
                 "partnerPassword" => env('IDCS_PASSWORD')
