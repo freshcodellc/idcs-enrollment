@@ -19,6 +19,7 @@ class IdcsApi
 
     private $endpoints = [
         "AlertCenter" => "https://xml.idcreditservices.com/rest/api/alerts/AlertCenter?type=json",
+        "CreditScoreHistory" => "https://xml.idcreditservices.com/rest/api/alerts/CreditScoreHistory?type=json",
         "cancel" => "https://xml.idcreditservices.com/PartnerWebServices/UpdateStatusRequest.asmx?WSDL",
         "enroll" => "https://xml.idcreditservices.com/IDSWebServicesNG/IDSEnrollment.asmx?WSDL",
         "getCreditUrl" => "https://xml.idcreditservices.com/SIDUpdateServices/MemberUpdate.asmx?WSDL"
@@ -48,6 +49,29 @@ class IdcsApi
             return $result->Response->Report;
         } else {
             Log::error("Error getting Alert Center on user id {$this->user->id} -- " . $result->Response->ErrorCode . ": " . $result->Response->ErrorMessage);
+            throw new IdcsApiException($result->Response->ErrorCode . ": " . $result->Response->ErrorMessage);
+        }
+    }
+
+    public function getCreditScoreHistory() {
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('POST', $this->endpoints['CreditScoreHistory'], [
+            //'verify' => false,
+            'json' => [
+                "memberId" => $this->user->uuid,
+                "partnerAccount" => env('IDCS_USERNAME'),
+                "partnerCode" => env('IDCS_USERNAME'),
+                "partnerPassword" => env('IDCS_PASSWORD')
+            ]
+        ]);
+
+        $result = json_decode($response->getBody()->getContents());
+
+        if ($result->Response->Status == "SUCCESS") {
+            return $result->Response->DataPoints;
+        } else {
+            Log::error("Error getting Credit Score History on user id {$this->user->id} -- " . $result->Response->ErrorCode . ": " . $result->Response->ErrorMessage);
             throw new IdcsApiException($result->Response->ErrorCode . ": " . $result->Response->ErrorMessage);
         }
     }
