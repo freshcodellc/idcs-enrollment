@@ -56,6 +56,15 @@ class HomeController extends Controller
 
         $stripe_key = env('APP_ENV') == "local" ? env('STRIPE_KEY_TEST_PUBLISHABLE') : env('STRIPE_KEY_PUBLISHABLE');
 
+        $idcs_api = new IdcsApi(Auth::user());
+        $credit_data = [];
+        try {
+            $credit_data['credit-score-history'] = $idcs_api->getCreditScoreHistory();
+            $credit_data['alert-center-report'] = $idcs_api->getAlertCenterReport();
+        } catch (IdcsApiException $e) {
+            // credit data not required, so continue as normal
+        }
+
         if ($request->input['error']) {
             $this->errors[] = $request->input['error'];
         }
@@ -64,6 +73,7 @@ class HomeController extends Controller
             'stripe_key' => $stripe_key,
             'stripe_customer' => $this->stripe_customer,
             'credit_url' => $this->credit_url,
+            'credit_data' => $credit_data,
             'errors' => $this->errors,
             'success' => $request->input('success')
         ]);
@@ -291,7 +301,9 @@ class HomeController extends Controller
     protected function getAlertCenter() {
         try {
             $idcs_api = new IdcsApi(Auth::user());
-            $response = $idcs_api->getAlertCenterReport();
+            $response['credit-score-history'] = $idcs_api->getCreditScoreHistory();
+            $response['alert-center-report'] = $idcs_api->getAlertCenterReport();
+
             dd($response);
         } catch (IdcsApiException $e) {
             dd($e->getMessage());

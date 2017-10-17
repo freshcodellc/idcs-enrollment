@@ -10,12 +10,12 @@
                     <li class="">Step 1: Account</li>
                     <li @if ($credit_url->charge_id) @else class="todo-step"@endif>Step 2: Billing</li>
                     <li class="todo-step">Step 3: Verify &amp; View Report</li>
-                </ul>              
-                <div class="u-shadow-v21 g-bg-white rounded g-pa-50">            
+                </ul>
+                <div class="u-shadow-v21 g-bg-white rounded g-pa-50">
                   <header class="text-center mb-4">
                     <h2 class="h2 g-font-weight-600">Account Status</h2>
-                  </header>   
-                               
+                  </header>
+
                 @if ($credit_url->url)
                 <table class="table table-striped table-hover g-my-70">
                     <tr>
@@ -36,6 +36,17 @@
                     </tr>
                 </table>
                 @endif
+
+                @foreach($credit_data['credit-score-history'] as $score)
+                <div class="row">
+                    <h4 class="col-md-12 text-center">{{ $score->Month }} Credit Scores</h4>
+                </div>
+                <div class="row text-center" style="margin-bottom: 30px;">
+                    <div class="col-md-4">TransUnion<br />{{ $score->TU }}</div>
+                    <div class="col-md-4">Experian<br />{{ $score->EXP }}</div>
+                    <div class="col-md-4">Equifax<br />{{ $score->EQF }}</div>
+                </div>
+                @endforeach
 
                 @if ($credit_url->url && empty($credit_url->charge_id))
                 <form class="text-center" action="{{ route('charge_payment') }}" method="POST">
@@ -59,7 +70,7 @@
 
                 @if ($credit_url->url && $credit_url->charge_id > 0 && $stripe_customer->subscription_id)
 
-                    @if (empty($credit_url->cancelled_at))                   
+                    @if (empty($credit_url->cancelled_at))
                     <button type="button"
                             class="btn btn-primary btn-lg centerbtn"
                             data-toggle="modal"
@@ -81,8 +92,8 @@
                             Cancel Subscription
                         </button>
                     </form>
-                    @endif    --}}                 
-                @endif 
+                    @endif    --}}
+                @endif
                 </div>
             </div>
             @include('sidebar')
