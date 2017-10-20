@@ -61,7 +61,7 @@ class HomeController extends Controller
         try {
             $credit_data['credit-score-history'] = $idcs_api->getCreditScoreHistory();
             $credit_data['alert-center-report'] = $idcs_api->getAlertCenterReport();
-        } catch (IdcsApiException $e) {
+        } catch (\Exception $e) {
             // credit data not required, so continue as normal
         }
 
