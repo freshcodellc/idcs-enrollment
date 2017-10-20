@@ -124,7 +124,7 @@ class HomeController extends Controller
         }
 
         if (empty($this->stripe_customer->subscription_id)) {
-            $this->subscribe("credit-report-sub");
+            $this->subscribe("credit-report-sub-2999");
         }
 
         $get_params['errors'] = $this->errors;
@@ -143,23 +143,24 @@ class HomeController extends Controller
         \Stripe\Stripe::setApiKey($stripe_secret_key);
         try {
             $plan = \Stripe\Plan::create(array(
-                "amount" => 2900,
+                "amount" => 2999,
                 "interval" => "month",
                 "name" => "Credit Report Subscription",
                 "currency" => "usd",
-                "id" => "credit-report-sub",
+                "id" => "credit-report-sub-2999",
                 "trial_period_days" => 7
             ));
         } catch (\Exception $e) {
             if (stripos($e->getMessage(), "Plan already exists") !== false) {
                 if (env('APP_DEBUG')) {
-                    echo "Plan already created with id of 'credit-report-sub'";
+                    echo "Plan already created with id of 'credit-report-sub-2999'";
                 }
             }
         }
 
         if (env('APP_DEBUG')) {
-            echo "Plan successfully created with id of 'credit-report-sub'";
+            echo "Plan successfully created with id of 'credit-report-sub-2999'";
+            dd($plan);
         }
     }
 
@@ -206,7 +207,7 @@ class HomeController extends Controller
         $this->credit_url->save();
     }
 
-    protected function subscribe($plan = 'credit-report-sub') {
+    protected function subscribe($plan = 'credit-report-sub-2999') {
         $stripe_secret_key = env('APP_ENV') == "local" ? env('STRIPE_KEY_TEST_SECRET') : env('STRIPE_KEY_SECRET');
 
         \Stripe\Stripe::setApiKey($stripe_secret_key);
@@ -224,7 +225,7 @@ class HomeController extends Controller
             ));
         } catch (\Stripe\Error\InvalidRequest $e) {
             // check if the plan does not exist
-            if (stripos($e->getMessage(), 'No such plan: credit-report-sub') !== false) {
+            if (stripos($e->getMessage(), 'No such plan: credit-report-sub-2999') !== false) {
                 $this->createSubscriptionPlan();
                 unset($subscription);
             }
