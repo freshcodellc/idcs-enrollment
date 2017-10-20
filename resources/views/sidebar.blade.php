@@ -7,10 +7,10 @@
     <div class="row">
 
                 
-        <div class="col-md-3 g-ml-20">
+        <div class="col-md-3 g-ml-20 secure-shield">
             <i class="fal fa-shield-alt fa-5x" style="color:#1573C8;"></i>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-7 secure-shield-con">
             <h3>SECURE SITE</h3>
             <p>We are committed to your security.</p>
         </div>

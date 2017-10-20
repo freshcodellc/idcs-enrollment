@@ -95,4 +95,8 @@ body.modal-open {
     display: none; }
   .thesteps li {
     display: block;
-    margin: 20px 30px; } }
+    margin: 20px 30px; }
+  .secure-shield {
+    margin: 40px 0 0 40px; }
+  .secure-shield-con {
+    margin-left: 20px; } }

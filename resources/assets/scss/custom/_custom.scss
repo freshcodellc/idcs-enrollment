@@ -123,6 +123,7 @@ body.modal-open {
 	position: absolute;
     top: -4px;
     right: -2px;
+    z-index: 19999;
 }
 
 .dropdown-menu {
@@ -154,4 +155,11 @@ body.modal-open {
 			margin: 20px 30px;
 		}
 	}
+	// sidebar
+	.secure-shield {
+		margin: 40px 0 0 40px;
+	}
+	.secure-shield-con {
+		margin-left: 20px;
+	}	
 }
