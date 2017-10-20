@@ -37,6 +37,7 @@
                 </table>
                 @endif
 
+                @if (isset($credit_data['credit-score-history']))
                 @foreach($credit_data['credit-score-history'] as $score)
                 <div class="row">
                     <h4 class="col-md-12 text-center">{{ $score->Month }} Credit Scores</h4>
@@ -47,6 +48,7 @@
                     <div class="col-md-4">Equifax<br />{{ $score->EQF }}</div>
                 </div>
                 @endforeach
+                @endif
 
                 @if ($credit_url->url && empty($credit_url->charge_id))
                 <form class="text-center" action="{{ route('charge_payment') }}" method="POST">
