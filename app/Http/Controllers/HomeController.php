@@ -50,20 +50,18 @@ class HomeController extends Controller
         $this->getOrEnrollCreditUrl();
         $this->stripe_customer = StripeCustomer::where('user_id', Auth::user()->id)->first();
 
+        $this->enrollDataMonitoring();
+
         if (!empty($this->credit_url->charge_id) && empty($this->stripe_customer->subscription_id)) {
             $this->subscribe();
         }
 
         $stripe_key = env('APP_ENV') == "local" ? env('STRIPE_KEY_TEST_PUBLISHABLE') : env('STRIPE_KEY_PUBLISHABLE');
 
-        $idcs_api = new IdcsApi(Auth::user());
-        $credit_data = [];
-        try {
-            $credit_data['credit-score-history'] = $idcs_api->getCreditScoreHistory();
-            $credit_data['alert-center-report'] = $idcs_api->getAlertCenterReport();
-        } catch (\Exception $e) {
-            // credit data not required, so continue as normal
-        }
+
+
+        $credit_data = $this->getAlertCenterData();
+        //echo $credit_data['alert-center-report']->Inbox->Alert[0]->Body->{'#cdata-section'};
 
         if ($request->input['error']) {
             $this->errors[] = $request->input['error'];
@@ -299,16 +297,50 @@ class HomeController extends Controller
         return redirect()->route('home', $get_params);
     }
 
-    protected function getAlertCenter() {
-        try {
+    /**
+     * Enroll user with data monitoring with IDCS
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected function enrollDataMonitoring()
+    {
+        if (empty($this->credit_url->data_enrolled_at)) {
             $idcs_api = new IdcsApi(Auth::user());
-            $response['credit-score-history'] = $idcs_api->getCreditScoreHistory();
-            $response['alert-center-report'] = $idcs_api->getAlertCenterReport();
+            $enroll_response = $idcs_api->enrollDataMonitoring();
 
-            dd($response);
-        } catch (IdcsApiException $e) {
-            dd($e->getMessage());
+            if ($enroll_response) {
+                $this->credit_url->data_enrolled_at = Carbon::now()->toDateTimeString();
+                $this->credit_url->save();
+            }
         }
+    }
+
+    protected function getAlertCenter() {
+        $data = $this->getAlertCenterData();
+        dd($data);
+    }
+
+    private function getAlertCenterData() {
+        $idcs_api = new IdcsApi(Auth::user());
+
+        $result = [
+            'credit-score-history' => [],
+            'alert-center-report' => []
+        ];
+
+        try {
+            $result['credit-score-history'] = $idcs_api->getCreditScoreHistory();
+        } catch (IdcsApiException $e) {
+            $result['exceptions']['credit-score-history'] = $e->getMessage();
+        }
+
+        try {
+            $result['alert-center-report'] = $idcs_api->getAlertCenterReport();
+        } catch (IdcsApiException $e) {
+            $result['exceptions']['alert-center-report'] = $e->getMessage();
+        }
+
+        return $result;
     }
 
 }
