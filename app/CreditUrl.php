@@ -12,7 +12,7 @@ class CreditUrl extends Model
      *
      * @var array
      */
-    protected $fillable = ['user_id', 'url', 'sale_id', 'kba_result', 'cancelled_at'];
+    protected $fillable = ['user_id', 'url', 'sale_id', 'kba_result', 'cancelled_at', 'data_enrolled_at'];
 
     /**
      * Get user's personalized credit URL
