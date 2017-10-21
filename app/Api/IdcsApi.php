@@ -22,6 +22,7 @@ class IdcsApi
         "CreditScoreHistory" => "https://xml.idcreditservices.com/rest/api/alerts/CreditScoreHistory?type=json",
         "cancel" => "https://xml.idcreditservices.com/PartnerWebServices/UpdateStatusRequest.asmx?WSDL",
         "enroll" => "https://xml.idcreditservices.com/IDSWebServicesNG/IDSEnrollment.asmx?WSDL",
+        "enrollDataMonitoring" => "https://xml.idcreditservices.com/IDSWebServicesNG/IDSDataMonitoring.asmx?WSDL",
         "getCreditUrl" => "https://xml.idcreditservices.com/SIDUpdateServices/MemberUpdate.asmx?WSDL"
     ];
 
@@ -34,6 +35,7 @@ class IdcsApi
         $client = new \GuzzleHttp\Client();
 
         $response = $client->request('POST', $this->endpoints['AlertCenter'], [
+            'verify' => env('APP_ENV') == "local" ? false : true,
             'json' => [
                 "memberId" => $this->user->uuid,
                 "partnerAccount" => env('IDCS_USERNAME'),
@@ -57,7 +59,7 @@ class IdcsApi
         $client = new \GuzzleHttp\Client();
 
         $response = $client->request('POST', $this->endpoints['CreditScoreHistory'], [
-            //'verify' => false,
+            'verify' => env('APP_ENV') == "local" ? false : true,
             'json' => [
                 "memberId" => $this->user->uuid,
                 "partnerAccount" => env('IDCS_USERNAME'),
@@ -117,6 +119,52 @@ class IdcsApi
 
             return false;
         }
+    }
+
+    public function enrollDataMonitoring() {
+        $client = new \SoapClient($this->endpoints['enrollDataMonitoring'], array(
+            'trace' => true,
+            'cache_wsdl' => WSDL_CACHE_NONE,
+            //'soap_version' => SOAP_1_2,
+            //'use' => SOAP_LITERAL
+            //'features' => SOAP_SINGLE_ELEMENT_ARRAYS
+        ));
+
+        $parameters = [
+            "Product" => [
+                "ProductUser" => [
+                    "Memberid" => $this->user->uuid
+                ]
+            ],
+            "MonitorRequest" => [],
+            "Partner" => [
+                "partnerAccount" => env('IDCS_USERNAME'),
+                "partnerCode" => env('IDCS_USERNAME'),
+                "partnerPassword" => env('IDCS_PASSWORD')
+            ]
+        ];
+
+
+        $xml = new \SimpleXMLElement("<Request></Request>");
+
+        $this->array_to_xml($parameters, $xml);
+        $raw_xml = $xml->asXML();
+        $raw_xml = trim(str_replace('<?xml version="1.0"?>', '', $raw_xml));
+
+        $parameters = [
+            'xmlRequest' => [
+                'any' => new \SoapVar($raw_xml, XSD_ANYXML)
+            ]
+        ];
+
+        $result_xml = $client->IDSDataEnrollmentXML($parameters);
+
+        $result = new \SimpleXMLElement($result_xml->IDSDataEnrollmentXMLResult->any);
+        if (isset($result->ErrorCode) || isset($result->ErrorMessage)) {
+            Log::error("Error enrolling data monitoring on user id {$this->user->id} -- " . $result->ErrorCode . ": " . $result->ErrorMessage);
+            return false;
+        }
+        return true;
     }
 
     /**
