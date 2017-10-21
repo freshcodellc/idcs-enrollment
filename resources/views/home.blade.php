@@ -37,7 +37,7 @@
                 </table>
                 @endif
 
-                @if (isset($credit_data['credit-score-history']))
+                @if (isset($credit_data['credit-score-history']) && is_array($credit_data['credit-score-history']))
                 @foreach($credit_data['credit-score-history'] as $score)
                 <div class="row">
                     <h4 class="col-md-12 text-center">{{ $score->Month }} Credit Scores</h4>
