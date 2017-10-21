@@ -157,7 +157,12 @@ class IdcsApi
             ]
         ];
 
-        $result_xml = $client->IDSDataEnrollmentXML($parameters);
+        try {
+            $result_xml = $client->IDSDataEnrollmentXML($parameters);
+        } catch (\Exception $e) {
+            Log::error("Error enrolling data monitoring on user id {$this->user->id} -- ". $e->getMessage();
+            return false;
+        }
 
         $result = new \SimpleXMLElement($result_xml->IDSDataEnrollmentXMLResult->any);
         if (isset($result->ErrorCode) || isset($result->ErrorMessage)) {
