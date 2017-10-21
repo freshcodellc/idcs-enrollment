@@ -43,7 +43,7 @@
                     </header>
                     @if (empty($credit_data['credit-score-history']))
                     <div class="row" style="margin-bottom: 40px;">
-                        <h4 class="col-md-12 text-center">No Alerts at time!</h4>
+                        <h4 class="col-md-12 text-center">No Alerts at this time!</h4>
                     </div>
                     @else
                         @foreach($credit_data['credit-score-history'] as $score)
