@@ -37,17 +37,26 @@
                 </table>
                 @endif
 
-                @if (isset($credit_data['credit-score-history']) && is_array($credit_data['credit-score-history']))
-                @foreach($credit_data['credit-score-history'] as $score)
-                <div class="row">
-                    <h4 class="col-md-12 text-center">{{ $score->Month }} Credit Scores</h4>
-                </div>
-                <div class="row text-center" style="margin-bottom: 30px;">
-                    <div class="col-md-4">TransUnion<br />{{ $score->TU }}</div>
-                    <div class="col-md-4">Experian<br />{{ $score->EXP }}</div>
-                    <div class="col-md-4">Equifax<br />{{ $score->EQF }}</div>
-                </div>
-                @endforeach
+                @if (isset($credit_data['credit-score-history']))
+                    <header class="text-center mb-4">
+                        <h2 class="h2 g-font-weight-600">Alerts</h2>
+                    </header>
+                    @if (empty($credit_data['credit-score-history']))
+                    <div class="row" style="margin-bottom: 40px;">
+                        <h4 class="col-md-12 text-center">No Alerts at time!</h4>
+                    </div>
+                    @else
+                        @foreach($credit_data['credit-score-history'] as $score)
+                        <div class="row">
+                            <h4 class="col-md-12 text-center">{{ $score->Month }} Credit Scores</h4>
+                        </div>
+                        <div class="row text-center" style="margin-bottom: 30px;">
+                            <div class="col-md-4">TransUnion<br />{{ $score->TU }}</div>
+                            <div class="col-md-4">Experian<br />{{ $score->EXP }}</div>
+                            <div class="col-md-4">Equifax<br />{{ $score->EQF }}</div>
+                        </div>
+                        @endforeach
+                    @endif
                 @endif
 
                 @if ($credit_url->url && empty($credit_url->charge_id))
