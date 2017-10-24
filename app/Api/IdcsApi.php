@@ -160,7 +160,7 @@ class IdcsApi
         try {
             $result_xml = $client->IDSDataEnrollmentXML($parameters);
         } catch (\Exception $e) {
-            Log::error("Error enrolling data monitoring on user id {$this->user->id} -- ". $e->getMessage();
+            Log::error("Error enrolling data monitoring on user id {$this->user->id} -- ". $e->getMessage());
             return false;
         }
 
