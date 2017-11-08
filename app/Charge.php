@@ -11,5 +11,5 @@ class Charge extends Model
      *
      * @var array
      */
-    protected $fillable = ['user_id', 'credit_url_id', 'stripe_id', 'amount'];
+    protected $fillable = ['user_id', 'credit_url_id', 'stripe_id', 'amount', 'stripe_refund_id'];
 }

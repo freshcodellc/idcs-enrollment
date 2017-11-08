@@ -50,7 +50,9 @@ class HomeController extends Controller
         $this->getOrEnrollCreditUrl();
         $this->stripe_customer = StripeCustomer::where('user_id', Auth::user()->id)->first();
 
-        $this->enrollDataMonitoring();
+        if ($this->credit_url->exists) {
+            $this->enrollDataMonitoring();
+        }
 
         if (!empty($this->credit_url->charge_id) && empty($this->stripe_customer->subscription_id)) {
             $this->subscribe();

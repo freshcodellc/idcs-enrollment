@@ -175,7 +175,7 @@ class IdcsApi
     /**
      * Enroll user with IDCS
      *
-     * @return CreditUrl
+     * @return array
      * @throws \Exception
      */
     public function enroll()

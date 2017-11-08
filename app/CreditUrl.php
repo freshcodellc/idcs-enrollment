@@ -52,7 +52,7 @@ class CreditUrl extends Model
     }
 
     /**
-     * Get the user that owns the phone.
+     * Get the user that owns the Credit URL.
      */
     public function user()
     {
